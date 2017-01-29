@@ -50,11 +50,13 @@ extern "C" {
 
 extern "C" void _string_api_anchor();
 extern "C" void _vector2_api_anchor();
+extern "C" void _vector3_api_anchor();
 
 void _api_anchor() {
 
 	_string_api_anchor();
 	_vector2_api_anchor();
+	_vector3_api_anchor();
 }
 
 extern "C++" {
@@ -118,7 +120,7 @@ void GDAPI godot_string_name_free(godot_string_name *p_str) {
 
 
 // Class
-
+/*
 char GDAPI **godot_class_get_list() {
 	List<StringName> types;
 	ClassDB::get_class_list(&types);
@@ -216,6 +218,7 @@ char GDAPI **godot_class_get_constant_list(char* p_class) {
 int GDAPI godot_class_constant_get_value(char* p_class,char *p_constant) {
 	return ClassDB::get_integer_constant(StringName(p_class), StringName(p_constant));
 }
+*/
 
 
 // Singleton API
@@ -243,11 +246,13 @@ void GDAPI godot_method_bind_ptrcall(godot_method_bind *p_method_bind, godot_obj
 	mb->ptrcall((Object*)p_instance, p_args, p_ret);
 }
 
-
+// @Todo
+/*
 void GDAPI godot_method_bind_varcall(godot_method_bind *p_method_bind)
 {
 
 }
+*/
 
 
 
@@ -255,13 +260,13 @@ void GDAPI godot_method_bind_varcall(godot_method_bind *p_method_bind)
 
 // Script API
 
-void GDAPI godot_script_register(const char* p_base,const char* p_name,godot_script_instance_func p_instance_func,godot_script_destroy_func p_free_func) {
+void GDAPI godot_script_register(const char* p_name,const char* p_base,godot_script_instance_func p_instance_func,godot_script_destroy_func p_free_func) {
 	DLLibrary* library = DLLibrary::get_currently_initialized_library();
 	if(!library) {
 		ERR_EXPLAIN("Attempt to register script after initializing library!");
 		ERR_FAIL();
 	}
-	library->_register_script(p_base, p_name, p_instance_func, p_free_func);
+	library->_register_script(p_name, p_base, p_instance_func, p_free_func);
 }
 
 void GDAPI godot_script_add_method(const char* p_name,const char* p_function_name,godot_method_attributes *p_attr,godot_script_func p_func) {

@@ -25,7 +25,7 @@ godot_real GDAPI godot_vector2_distance_squared_to(const godot_vector2 *p_a, con
 
 
 
-// other functions here. too lazy atm
+// @Incomplete
 /*
  * missing:
  *

@@ -20,6 +20,9 @@ godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot
 void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b);
 
 
+// @Incomplete
+
+
 void GDAPI godot_string_destroy(godot_string *p_str);
 
 

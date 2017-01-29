@@ -92,6 +92,17 @@ typedef struct godot_vector2 {
 
 #include "core_api/godot_vector2.h"
 
+////// Vector3
+
+#ifndef GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
+typedef struct godot_vector3 {
+	uint8_t _dont_touch_that[12];
+} godot_vector3;
+#endif
+
+#include "core_api/godot_vector3.h"
+
+
 ////// InputEvent
 
 /*
@@ -250,7 +261,7 @@ typedef struct godot_property_attributes {
 typedef void* (godot_script_instance_func)(godot_object*); //passed an instance, return a pointer to your userdata
 typedef void (godot_script_destroy_func)(godot_object*,void*); //passed an instance, please free your userdata
 
-void GDAPI godot_script_register(const char* p_base,const char* p_name,godot_script_instance_func p_instance_func,godot_script_destroy_func p_free_func);
+void GDAPI godot_script_register(const char* p_name,const char* p_base,godot_script_instance_func p_instance_func,godot_script_destroy_func p_free_func);
 
 
 typedef GDAPI godot_variant (godot_script_func)(godot_object*,void*,godot_variant**,int); //instance,userdata,arguments,argument count. Return something or NULL. Arguments must not be freed.

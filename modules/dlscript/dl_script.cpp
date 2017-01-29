@@ -338,7 +338,7 @@ Error DLLibrary::_initialize_handle() {
 }
 
 
-void DLLibrary::_register_script(const StringName p_base, const StringName p_name, DLScriptData::InstanceFunc p_instance_func, DLScriptData::DestroyFunc p_destroy_func) {
+void DLLibrary::_register_script(const StringName p_name, const StringName p_base, DLScriptData::InstanceFunc p_instance_func, DLScriptData::DestroyFunc p_destroy_func) {
 	ERR_FAIL_COND(scripts.has(p_name));
 	
 	DLScriptData* s = memnew( DLScriptData );
