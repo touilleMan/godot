@@ -40,6 +40,8 @@ struct MethodAPI {
 	List<String> argument_types;
 	List<String> argument_names;
 	
+	Map<int, Variant> default_arguments;
+
 	int argument_count;
 	bool has_varargs;
 };
@@ -142,7 +144,6 @@ List<ClassAPI> generate_c_api_classes() {
 		List<MethodInfo> methods;
 		ClassDB::get_method_list(class_name, &methods, true);
 
-
 		for (List<MethodInfo>::Element *m = methods.front(); m != NULL; m = m->next()) {
 			MethodAPI method_api;
 			MethodBind *method_bind = ClassDB::get_method(class_name, m->get().name);
@@ -190,8 +191,9 @@ List<ClassAPI> generate_c_api_classes() {
 				method_api.argument_names.push_back(arg_name);
 				method_api.argument_types.push_back(arg_type);
 
-				// @Incomplete
-				// default arguments
+				if (method_bind && method_bind->has_default_argument(i)) {
+					method_api.default_arguments[i] = method_bind->get_default_argument(i);
+				}
 			}
 
 			class_api.methods.push_back(method_api);
@@ -217,6 +219,11 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 			for (int i = 0; i < mapi.argument_count; i++) {
 				s += mapi.argument_types[i] + " ";
 				s += mapi.argument_names[i];
+
+				if (mapi.default_arguments.has(i)) {
+					s += String(" = ") + mapi.default_arguments[i];
+				}
+
 				if (i != mapi.argument_count - 1) {
 					s += ", ";
 				}

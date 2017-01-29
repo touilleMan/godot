@@ -281,8 +281,8 @@ void GDAPI godot_script_add_method(const char* p_name,const char* p_function_nam
 void GDAPI godot_script_add_validated_method(const char* p_name,const char* p_function_name,godot_method_attributes *p_attr, godot_script_func p_func,int* p_arg_types,int p_arg_count,godot_variant** p_default_args,int p_default_arg_count);
 
 
-typedef void (godot_set_property_func)(godot_object*,void*,godot_variant*); //instance,userdata,value. Value must not be freed.
-typedef godot_variant (godot_get_property_func)(godot_object*,void*); //instance,userdata. Return a value or NULL.
+typedef void (godot_set_property_func)(godot_object*,void*,godot_variant); //instance,userdata,value. Value must not be freed.
+typedef godot_variant (godot_get_property_func)(godot_object*,void*); //instance,userdata. Return a value
 
 void GDAPI godot_script_add_property(const char* p_name,const char* p_path,godot_property_attributes *p_attr, godot_set_property_func p_set_func,godot_get_property_func p_get_func);
 

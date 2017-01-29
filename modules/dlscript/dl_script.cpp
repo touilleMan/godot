@@ -484,7 +484,7 @@ DLLibrary::~DLLibrary() {
 
 bool DLInstance::set(const StringName& p_name, const Variant& p_value) {
 	if(script->script_data->properties.has(p_name)) {
-		script->script_data->properties[p_name].setter((godot_object*) owner, userdata, (godot_variant*) &p_value);
+		script->script_data->properties[p_name].setter((godot_object*) owner, userdata, *(godot_variant*) &p_value);
 		return true;
 	}
 	return false;
