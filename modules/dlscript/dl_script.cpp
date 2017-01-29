@@ -687,7 +687,7 @@ void DLScriptLanguage::init() {
 	List<String>::Element *E = args.find("--dlscript-generate-json-api");
 
 	if (E && E->next()) {
-        if (generate_c_api(E->next()->get()) != OK) {
+		if (generate_c_api(E->next()->get()) != OK) {
 			ERR_PRINT("Failed to generate C API\n");
 		}
 	}

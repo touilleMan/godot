@@ -103,6 +103,17 @@ typedef struct godot_vector3 {
 #include "core_api/godot_vector3.h"
 
 
+////// Transform2D
+
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+typedef struct godot_transform2d {
+	uint8_t _dont_touch_that[24];
+} godot_transform2d;
+#endif
+
+#include "core_api/godot_transform2d.h"
+
+
 ////// InputEvent
 
 /*
