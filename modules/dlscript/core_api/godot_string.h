@@ -21,6 +21,8 @@ void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *
 
 
 // @Incomplete
+// hmm, I guess exposing the whole API doesn't make much sense
+// since the language used in the library has its own string funcs
 
 
 void GDAPI godot_string_destroy(godot_string *p_str);

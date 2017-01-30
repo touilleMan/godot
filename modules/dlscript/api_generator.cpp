@@ -3,14 +3,7 @@
 
 #include "class_db.h"
 #include "os/file_access.h"
-//#include "path_utils.h"
 #include "core/globals.h"
-
-
-
-#define FUNCTION_PREFIX "godot_"
-
-#define DATATYPE_PREFIX "godot_"
 
 
 // helper stuff
@@ -86,14 +79,9 @@ struct ClassAPI {
 };
 
 
-String cpp_string_to_c_type(const String& p_type) {
-
-	return DATATYPE_PREFIX + p_type.to_lower();
-}
-
-
-//
-
+/*
+ * Reads the entire Godot API to a list
+ */
 List<ClassAPI> generate_c_api_classes() {
 
 	List<ClassAPI> api;
@@ -127,6 +115,7 @@ List<ClassAPI> generate_c_api_classes() {
 			class_api.memory_own = !class_api.is_singleton && is_reference;
 		}
 
+		// constants
 		{
 			List<String> constant;
 			ClassDB::get_integer_constant_list(class_name, &constant, true);
@@ -141,7 +130,6 @@ List<ClassAPI> generate_c_api_classes() {
 		}
 
 		// signals
-
 		{
 			List<MethodInfo> signals_;
 			ClassDB::get_signal_list(class_name, &signals_, true);
@@ -281,7 +269,9 @@ List<ClassAPI> generate_c_api_classes() {
 	return api;
 }
 
-
+/*
+ * Generates the JSON source from the API in p_api
+ */
 static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
 	// I'm sorry for the \t mess
@@ -367,13 +357,15 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 //
 
 
-
+/*
+ * Saves the whole Godot API to a JSON file located at
+ *  p_path
+ */
 Error generate_c_api(const String &p_path) {
 
 	List<ClassAPI> api = generate_c_api_classes();
 
 	List<String> json_source = generate_c_api_json(api);
-	save_file(p_path, json_source);
 
-	return OK;
+	return save_file(p_path, json_source);
 }
