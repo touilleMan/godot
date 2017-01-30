@@ -48,10 +48,10 @@ struct MethodAPI {
 
 
 struct PropertyAPI {
-	String prop_name;
-	String prop_getter;
-	String prop_setter;
-	String prop_type;
+	String name;
+	String getter;
+	String setter;
+	String type;
 };
 
 struct ConstantAPI {
@@ -59,20 +59,30 @@ struct ConstantAPI {
 	int constant_value;
 };
 
+struct SignalAPI {
+	String name;
+	List<String> argument_types;
+	List<String> argument_names;
+	Map<int, Variant> default_arguments;
+};
+
 struct ClassAPI {
 	String class_name;
 	String super_class_name;
 
+	ClassDB::APIType api_type;
+
 	bool is_singleton;
 	bool is_instanciable;
+	// @Unclear
 	bool is_creatable;
+	// @Unclear
 	bool memory_own;
 
 	List<MethodAPI> methods;
 	List<PropertyAPI> properties;
 	List<ConstantAPI> constants;
-
-	// constants
+	List<SignalAPI> signals_;
 };
 
 
@@ -93,29 +103,33 @@ List<ClassAPI> generate_c_api_classes() {
 
 
 	for (List<StringName>::Element *e = classes.front(); e != NULL; e = e->next()) {
-		
-		ClassDB::APIType api_type = ClassDB::get_api_type(e->get());
-
 		StringName class_name = e->get();
 
 		ClassAPI class_api;
+		class_api.api_type         = ClassDB::get_api_type(e->get());
 		class_api.class_name       = class_name;
 		class_api.super_class_name = ClassDB::get_parent_class(class_name);
-		class_api.is_singleton     = GlobalConfig::get_singleton()->has_singleton(class_name);
+		{
+			String name = class_name;
+			if (name.begins_with("_")) {
+				name.remove(0);
+			}
+			class_api.is_singleton = GlobalConfig::get_singleton()->has_singleton(name);
+		}
+		class_api.is_instanciable  = !class_api.is_singleton && ClassDB::can_instance(class_name);
 
 		{
 			bool is_reference = false;
 			List<StringName> inheriters;
 			ClassDB::get_inheriters_from_class("Reference", &inheriters);
 			is_reference = inheriters.find(class_name) < 0;
+			// @Unclear
 			class_api.memory_own = !class_api.is_singleton && is_reference;
 		}
 
 		{
-		//TODO constants name value
-		//constants
 			List<String> constant;
-			ClassDB::get_integer_constant_list(class_name, &constant);
+			ClassDB::get_integer_constant_list(class_name, &constant, true);
 			for (List<String>::Element *c = constant.front(); c != NULL; c = c->next()){
 				ConstantAPI constant_api;
 				constant_api.constant_name  = c->get();
@@ -125,78 +139,140 @@ List<ClassAPI> generate_c_api_classes() {
 
 			}
 		}
+
+		// signals
+
+		{
+			List<MethodInfo> signals_;
+			ClassDB::get_signal_list(class_name, &signals_, true);
+
+			for (int i = 0; i < signals_.size(); i++) {
+				SignalAPI signal;
+
+				MethodInfo method_info = signals_[i];
+				signal.name = method_info.name;
+
+				for (int j = 0; j < method_info.arguments.size(); j++) {
+					PropertyInfo argument = method_info.arguments[j];
+					String type;
+					String name = argument.name;
+
+					if (argument.name.find(":") != -1) {
+						type = argument.name.get_slice(":", 1);
+						name = argument.name.get_slice(":", 0);
+					} else if (argument.hint == PROPERTY_HINT_RESOURCE_TYPE) {
+						type = argument.hint_string;
+					}else if (argument.type == Variant::NIL) {
+						type = "Variant";
+					} else {
+						type = Variant::get_type_name(argument.type);
+					}
+
+					signal.argument_names.push_back(name);
+					signal.argument_types.push_back(type);
+				}
+
+				Vector<Variant> default_arguments = method_info.default_arguments;
+
+				int default_start = signal.argument_names.size() - default_arguments.size();
+
+				for (int j = 0; j < default_arguments.size(); j++) {
+					signal.default_arguments[default_start + j] = default_arguments[j];
+				}
+
+				class_api.signals_.push_back(signal);
+			}
+		}
+
 		
 		//properties
-		List<PropertyInfo> properties;
-		ClassDB::get_property_list(class_name, &properties, true);
-		
-		for (List<PropertyInfo>::Element *p = properties.front(); p != NULL; p = p->next()) {
-			PropertyAPI property_api;
-			
-			property_api.prop_getter=ClassDB::get_property_getter(class_name,p->get().name);
-			property_api.prop_setter=ClassDB::get_property_setter(class_name,p->get().name);
-			property_api.prop_type=Variant::get_type_name(ClassDB::get_property_type(class_name,p->get().name));
-			
-			class_api.properties.push_back(property_api);
+		{
+			List<PropertyInfo> properties;
+			ClassDB::get_property_list(class_name, &properties, true);
+
+			for (List<PropertyInfo>::Element *p = properties.front(); p != NULL; p = p->next()) {
+				PropertyAPI property_api;
+
+				property_api.name   = p->get().name;
+				property_api.getter = ClassDB::get_property_getter(class_name,p->get().name);
+				property_api.setter = ClassDB::get_property_setter(class_name,p->get().name);
+
+				if (p->get().name.find(":") != -1) {
+					property_api.type = p->get().name.get_slice(":", 1);
+					property_api.name = p->get().name.get_slice(":", 0);
+				} else if (p->get().hint == PROPERTY_HINT_RESOURCE_TYPE) {
+					property_api.type = p->get().hint_string;
+				} else if (p->get().type == Variant::NIL) {
+					property_api.type = "Variant";
+				} else {
+					property_api.type = Variant::get_type_name(p->get().type);
+				}
+
+				if (!property_api.setter.empty() || !property_api.getter.empty()) {
+					class_api.properties.push_back(property_api);
+				}
+			}
 		}
 		
 		//methods
-		List<MethodInfo> methods;
-		ClassDB::get_method_list(class_name, &methods, true);
+		{
+			List<MethodInfo> methods;
+			ClassDB::get_method_list(class_name, &methods, true);
 
-		for (List<MethodInfo>::Element *m = methods.front(); m != NULL; m = m->next()) {
-			MethodAPI method_api;
-			MethodBind *method_bind = ClassDB::get_method(class_name, m->get().name);
-			MethodInfo &method_info = m->get();
+			for (List<MethodInfo>::Element *m = methods.front(); m != NULL; m = m->next()) {
+				MethodAPI method_api;
+				MethodBind *method_bind = ClassDB::get_method(class_name, m->get().name);
+				MethodInfo &method_info = m->get();
 
-			//method name
-			method_api.method_name = m->get().name;
-			//method return type
-			if (method_bind && method_bind->get_return_type() != StringName()) {
-				method_api.return_type = method_bind->get_return_type();
-			} else if (method_api.method_name.find(":") != -1) {
-				method_api.return_type = method_api.method_name.get_slice(":", 1);
-				method_api.method_name = method_api.method_name.get_slice(":", 0);
-			} else if (m->get().return_val.type != Variant::NIL) {
-				method_api.return_type = m->get().return_val.hint == PROPERTY_HINT_RESOURCE_TYPE
-						? m->get().return_val.hint_string
-						: Variant::get_type_name(m->get().return_val.type);
-			} else {
-				method_api.return_type = "void";
-			}
-
-			method_api.argument_count = method_info.arguments.size();
-			method_api.has_varargs = method_bind && method_bind->is_vararg();
-
-			// method argument name and type
-
-			for (int i = 0; i < method_api.argument_count; i++) {
-				String arg_name;
-				String arg_type;
-				PropertyInfo arg_info = method_info.arguments[i];
-
-				arg_name = arg_info.name;
-
-				if (arg_info.name.find(":") != -1) {
-					arg_type = arg_info.name.get_slice(":", 1);
-					arg_name = arg_info.name.get_slice(":", 0);
-				} else if (arg_info.hint == PROPERTY_HINT_RESOURCE_TYPE) {
-					arg_type = arg_info.hint_string;
-				} else if (arg_info.type == Variant::NIL) {
-					arg_type = "Variant";
+				//method name
+				method_api.method_name = m->get().name;
+				//method return type
+				if (method_bind && method_bind->get_return_type() != StringName()) {
+					method_api.return_type = method_bind->get_return_type();
+				} else if (method_api.method_name.find(":") != -1) {
+					method_api.return_type = method_api.method_name.get_slice(":", 1);
+					method_api.method_name = method_api.method_name.get_slice(":", 0);
+				} else if (m->get().return_val.type != Variant::NIL) {
+					method_api.return_type = m->get().return_val.hint == PROPERTY_HINT_RESOURCE_TYPE
+							? m->get().return_val.hint_string
+							: Variant::get_type_name(m->get().return_val.type);
 				} else {
-					arg_type = Variant::get_type_name(arg_info.type);
+					method_api.return_type = "void";
 				}
 
-				method_api.argument_names.push_back(arg_name);
-				method_api.argument_types.push_back(arg_type);
+				method_api.argument_count = method_info.arguments.size();
+				method_api.has_varargs = method_bind && method_bind->is_vararg();
 
-				if (method_bind && method_bind->has_default_argument(i)) {
-					method_api.default_arguments[i] = method_bind->get_default_argument(i);
+				// method argument name and type
+
+				for (int i = 0; i < method_api.argument_count; i++) {
+					String arg_name;
+					String arg_type;
+					PropertyInfo arg_info = method_info.arguments[i];
+
+					arg_name = arg_info.name;
+
+					if (arg_info.name.find(":") != -1) {
+						arg_type = arg_info.name.get_slice(":", 1);
+						arg_name = arg_info.name.get_slice(":", 0);
+					} else if (arg_info.hint == PROPERTY_HINT_RESOURCE_TYPE) {
+						arg_type = arg_info.hint_string;
+					} else if (arg_info.type == Variant::NIL) {
+						arg_type = "Variant";
+					} else {
+						arg_type = Variant::get_type_name(arg_info.type);
+					}
+
+					method_api.argument_names.push_back(arg_name);
+					method_api.argument_types.push_back(arg_type);
+
+					if (method_bind && method_bind->has_default_argument(i)) {
+						method_api.default_arguments[i] = method_bind->get_default_argument(i);
+					}
 				}
+
+				class_api.methods.push_back(method_api);
 			}
-
-			class_api.methods.push_back(method_api);
 		}
 
 		api.push_back(class_api);
@@ -208,31 +284,81 @@ List<ClassAPI> generate_c_api_classes() {
 
 static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
+	// I'm sorry for the \t mess
+
 	List<String> source;
+
+	source.push_back("[\n");
 
 	for (const List<ClassAPI>::Element *c = p_api.front(); c != NULL; c = c->next()) {
 		ClassAPI api = c->get();
 
-		for (const List<MethodAPI>::Element *m = api.methods.front(); m != NULL; m = m->next()) {
-			MethodAPI mapi = m->get();
-			String s = mapi.return_type + "\t" + api.class_name + "." + mapi.method_name + "(";
-			for (int i = 0; i < mapi.argument_count; i++) {
-				s += mapi.argument_types[i] + " ";
-				s += mapi.argument_names[i];
+		source.push_back("\t{\n");
 
-				if (mapi.default_arguments.has(i)) {
-					s += String(" = ") + mapi.default_arguments[i];
-				}
+		source.push_back("\t\t\"name\": \"" + api.class_name + "\",\n");
+		source.push_back("\t\t\"base_class\": \"" + api.super_class_name + "\",\n");
+		source.push_back(String("\t\t\"api_type\": \"") + (api.api_type == ClassDB::API_CORE ? "core" : (api.api_type == ClassDB::API_EDITOR ? "tools" : "none")) + "\",\n");
+		source.push_back(String("\t\t\"singleton\": ") + (api.is_singleton ? "true" : "false") + ",\n");
+		source.push_back(String("\t\t\"instanciable\": ") + (api.is_instanciable ? "true" : "false") + ",\n");
+		// @Unclear
+		// source.push_back(String("\t\t\"createable\": ") + (api.is_creatable ? "true" : "false") + ",\n");
 
-				if (i != mapi.argument_count - 1) {
-					s += ", ";
-				}
-			}
-			s += ")";
-
-			print_line(s);
+		source.push_back("\t\t\"constants\": {\n");
+		for (List<ConstantAPI>::Element *e = api.constants.front(); e; e = e->next()) {
+			source.push_back("\t\t\t\"" + e->get().constant_name + "\": " + String::num_int64(e->get().constant_value) + (e->next() ? "," : "") + "\n");
 		}
+		source.push_back("\t\t},\n");
+
+		source.push_back("\t\t\"properties\": [\n");
+		for (List<PropertyAPI>::Element *e = api.properties.front(); e; e = e->next()) {
+			source.push_back("\t\t\t{\n");
+			source.push_back("\t\t\t\t\"name\": \"" + e->get().name + "\",\n");
+			source.push_back("\t\t\t\t\"type\": \"" + e->get().type + "\",\n");
+			source.push_back("\t\t\t\t\"getter\": \"" + e->get().getter + "\",\n");
+			source.push_back("\t\t\t\t\"setter\": \"" + e->get().setter + "\"\n");
+			source.push_back(String("\t\t\t}") + (e->next() ? "," : "") + "\n");
+		}
+		source.push_back("\t\t],\n");
+
+		source.push_back("\t\t\"signals\": [\n");
+		for (List<SignalAPI>::Element *e = api.signals_.front(); e; e = e->next()) {
+			source.push_back("\t\t\t{\n");
+			source.push_back("\t\t\t\t\"name\": \"" + e->get().name + "\",\n");
+			source.push_back("\t\t\t\t\"arguments\": [\n");
+			for (int i = 0; i < e->get().argument_names.size(); i++) {
+				source.push_back("\t\t\t\t\t{\n");
+				source.push_back("\t\t\t\t\t\t\"name\": \"" + e->get().argument_names[i] + "\",\n");
+				source.push_back("\t\t\t\t\t\t\"type\": \"" + e->get().argument_types[i] + "\",\n");
+				source.push_back("\t\t\t\t\t\t\"default_value\": \"" + (e->get().default_arguments.has(i) ? (String)e->get().default_arguments[i] : "") + "\"\n");
+				source.push_back(String("\t\t\t\t\t}") + ((i < e->get().argument_names.size() - 1) ? "," : "") + "\n");
+			}
+			source.push_back("\t\t\t\t]\n");
+			source.push_back(String("\t\t\t}") + (e->next() ? "," : "") + "\n");
+		}
+		source.push_back("\t\t],\n");
+
+		source.push_back("\t\t\"methods\": [\n");
+		for (List<MethodAPI>::Element *e = api.methods.front(); e; e = e->next()) {
+			source.push_back("\t\t\t{\n");
+			source.push_back("\t\t\t\t\"name\": \"" + e->get().method_name + "\",\n");
+			source.push_back("\t\t\t\t\"return_type\": \"" + e->get().return_type + "\",\n");
+			source.push_back("\t\t\t\t\"arguments\": [\n");
+			for (int i = 0; i < e->get().argument_names.size(); i++) {
+				source.push_back("\t\t\t\t\t{\n");
+				source.push_back("\t\t\t\t\t\t\"name\": \"" + e->get().argument_names[i] + "\",\n");
+				source.push_back("\t\t\t\t\t\t\"type\": \"" + e->get().argument_types[i] + "\",\n");
+				source.push_back("\t\t\t\t\t\t\"default_value\": \"" + (e->get().default_arguments.has(i) ? (String)e->get().default_arguments[i] : "") + "\"\n");
+				source.push_back(String("\t\t\t\t\t}") + ((i < e->get().argument_names.size() - 1) ? "," : "") + "\n");
+			}
+			source.push_back("\t\t\t\t]\n");
+			source.push_back(String("\t\t\t}") + (e->next() ? "," : "") + "\n");
+		}
+		source.push_back("\t\t]\n");
+
+		source.push_back(String("\t}") + (c->next() ? "," : "") + "\n");
 	}
+
+	source.push_back("]");
 
 	return source;
 }
