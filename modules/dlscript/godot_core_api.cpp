@@ -52,6 +52,7 @@ extern "C" void _string_api_anchor();
 extern "C" void _vector2_api_anchor();
 extern "C" void _vector3_api_anchor();
 extern "C" void _transform2d_api_anchor();
+extern "C" void _variant_api_anchor();
 
 void _api_anchor() {
 
@@ -59,6 +60,7 @@ void _api_anchor() {
 	_vector2_api_anchor();
 	_vector3_api_anchor();
 	_transform2d_api_anchor();
+	_variant_api_anchor();
 }
 
 extern "C++" {
@@ -69,55 +71,9 @@ _FORCE_INLINE_ a memcast(b v) {
 }
 
 
-// String
-
-godot_string GDAPI godot_string_new_with_c_data(const char *p_contents, const int p_size) {
-
-	return memcast<godot_string, String>(String::utf8(p_contents, p_size));
+void GDAPI godot_object_destroy(godot_object **p_o) {
+	memdelete(*(Object **) p_o);
 }
-
-void GDAPI godot_string_get_c_data(godot_string *p_str, char *p_contents, int *p_size) {
-	String *s = (String *) p_str;
-	CharString cs = s->utf8();
-
-	if (p_contents != NULL && p_size != NULL) {
-		memcpy(p_contents, cs.get_data(), *p_size);
-	} else if (p_size != NULL) {
-		*p_size = cs.length();
-	}
-}
-
-void GDAPI godot_string_free(godot_string *p_str) {
-	String *s = (String *) p_str;
-	s->~String();
-}
-
-
-
-// StringName
-
-godot_string_name GDAPI godot_string_name_new_with_string(const godot_string * const p_str) {
-	godot_string_name gsn;
-	StringName *ptr = (StringName *) &gsn;
-	memnew_placement(ptr, StringName);
-	StringName sn = ((String*) p_str)->utf8().get_data(); // Appearantly using String produces weird results
-	*ptr = sn;
-	return gsn;
-}
-
-
-godot_string GDAPI godot_string_name_get_string(godot_string_name *p_string_name) {
-	StringName *s = (StringName *) p_string_name;
-	String gs = (String) *s;
-	return memcast<godot_string, String>(gs);
-}
-
-
-void GDAPI godot_string_name_free(godot_string_name *p_str) {
-	StringName *s = (StringName *) p_str;
-	s->~StringName();
-}
-
 
 
 

@@ -85,6 +85,7 @@ typedef struct godot_string_name {
 ////// Vector2
 
 #ifndef GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
+#define GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
 typedef struct godot_vector2 {
 	uint8_t _dont_touch_that[8];
 } godot_vector2;
@@ -113,6 +114,27 @@ typedef struct godot_transform2d {
 
 #include "core_api/godot_transform2d.h"
 
+
+
+
+
+
+
+typedef void godot_object;
+
+void GDAPI godot_object_destroy(godot_object **p_o);
+
+
+////// Variant
+
+#ifndef GODOT_CORE_API_GODOT_VARIANT_TYPE_DEFINED
+typedef struct godot_variant {
+	uint8_t _dont_touch_that[24];
+} godot_variant;
+
+#include "core_api/godot_variant.h"
+
+#endif
 
 ////// InputEvent
 
@@ -203,13 +225,6 @@ int GDAPI godot_input_event_is_action_pressed(godot_input_event p_event,char *p_
 */
 
 
-
-
-typedef struct godot_variant {
-	uint8_t _dont_touch_that[24];
-} godot_variant;
-
-
 ////// Class
 /*
 char GDAPI **godot_class_get_list(); //get list of classes in array to array of strings, must be freed, use godot_list_free()
@@ -233,7 +248,7 @@ int GDAPI godot_class_constant_get_value(char* p_class,char *p_constant);
 	uint8_t _dont_touch_that[136]; // will only be accessed by pointer, so it doesn't matter
 } godot_object;
 */
-typedef void godot_object;
+
 ////// Singleton API
 
 godot_object *GDAPI godot_global_get_singleton(char* p_name); // result shouldn't be freed
