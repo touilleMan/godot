@@ -9,6 +9,7 @@ extern "C" {
 
 void GDAPI godot_variant_new(godot_variant *p_v);
 
+void GDAPI godot_variant_new_int(godot_variant *p_v, const godot_int *p_i);
 void GDAPI godot_variant_new_string(godot_variant *p_v, const godot_string *p_s);
 void GDAPI godot_variant_new_object(godot_variant *p_v, const godot_object **p_o);
 void GDAPI godot_variant_new_vector2(godot_variant *p_v, const godot_vector2 *p_v2);

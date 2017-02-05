@@ -18,8 +18,16 @@ void GDAPI godot_variant_new(godot_variant *p_v) {
 	*v = Variant();
 }
 
+void GDAPI godot_variant_new_int(godot_variant *p_v, const godot_int *p_i) {
+	Variant *v = (Variant *) p_v;
+	godot_variant_new(p_v);
+	*v = p_i;
+}
+
 void GDAPI godot_variant_new_string(godot_variant *p_v, const godot_string *p_s) {
 	Variant *v = (Variant *) p_v;
+	godot_variant_new(p_v);
+	*v = *(String *) p_s;
 }
 
 void GDAPI godot_variant_new_object(godot_variant *p_v, const godot_object **p_o) {
