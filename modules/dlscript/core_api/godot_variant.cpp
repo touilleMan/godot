@@ -32,14 +32,19 @@ void GDAPI godot_variant_new_string(godot_variant *p_v, const godot_string *p_s)
 
 void GDAPI godot_variant_new_object(godot_variant *p_v, const godot_object **p_o) {
 	Variant *v = (Variant *) p_v;
+	*v = *(Object *) p_o;
 }
 
 void GDAPI godot_variant_new_vector2(godot_variant *p_v, const godot_vector2 *p_v2) {
 	Variant *v = (Variant *) p_v;
+	Vector2 *v2 = (Vector2 *) p_v2;
+	*v = *v2;
 }
 
 void GDAPI godot_variant_new_vector3(godot_variant *p_v, const godot_vector3 *p_v3) {
 	Variant *v = (Variant *) p_v;
+	Vector3 *v3 = (Vector3 *) p_v3;
+	*v = *v3;
 }
 
 
@@ -69,6 +74,8 @@ void GDAPI godot_variant_get_vector2(const godot_variant *p_v, godot_vector2 *p_
 
 void GDAPI godot_variant_get_vector3(const godot_variant *p_v, godot_vector3 *p_v3) {
 	Variant *v = (Variant *) p_v;
+	Vector3 *v3 = (Vector3 *) p_v3;
+	*v3 = *v;
 }
 
 

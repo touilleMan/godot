@@ -421,7 +421,8 @@ void DLLibrary::_get_property_list( List<PropertyInfo> *p_list) const {
 	Set<String> registered_platform_names;
 	{
 		List<StringName> ep;
-		EditorImportExport::get_singleton()->get_export_platforms(&ep);
+		ep.push_back("X11");
+		// EditorImportExport::get_singleton()->get_export_platforms(&ep);
 		for (List<StringName>::Element *E=ep.front();E;E=E->next()) {
 			registered_platform_names.insert(String(E->get()).to_lower());
 		}
