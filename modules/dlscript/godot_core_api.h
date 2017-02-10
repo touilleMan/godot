@@ -115,6 +115,158 @@ typedef struct godot_transform2d {
 #include "core_api/godot_transform2d.h"
 
 
+/////// Plane
+
+#ifndef GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
+typedef struct godot_plane {
+	uint8_t _dont_touch_that[16];
+} godot_plane;
+#endif
+
+/////// Quat
+
+#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
+typedef struct godot_quat {
+	uint8_t _dont_touch_that[16];
+} godot_quat;
+#endif
+
+/////// Rect3
+
+#ifndef GODOT_CORE_API_GODOT_RECT3_TYPE_DEFINED
+typedef struct godot_rect3 {
+	uint8_t _dont_touch_that[24];
+} godot_rect3;
+#endif
+
+/////// Basis
+
+#ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
+typedef struct godot_basis {
+	uint8_t _dont_touch_that[36];
+} godot_basis;
+#endif
+
+/////// Transform
+
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
+typedef struct godot_transform {
+	uint8_t _dont_touch_that[48];
+} godot_transform;
+#endif
+
+/////// Color
+
+#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+typedef struct godot_color {
+	uint8_t _dont_touch_that[16];
+} godot_color;
+#endif
+
+/////// Image
+
+#ifndef GODOT_CORE_API_GODOT_IMAGE_TYPE_DEFINED
+typedef struct godot_image {
+	uint8_t _dont_touch_that[32];
+} godot_image;
+#endif
+
+/////// NodePath
+
+#ifndef GODOT_CORE_API_GODOT_NODE_PATH_TYPE_DEFINED
+typedef struct godot_node_path {
+	uint8_t _dont_touch_that[8];
+} godot_node_path;
+#endif
+
+/////// RID
+
+#ifndef GODOT_CORE_API_GODOT_RID_TYPE_DEFINED
+typedef struct godot_rid {
+	uint8_t _dont_touch_that[8];
+} godot_rid;
+#endif
+
+/////// InputEvent
+
+#ifndef GODOT_CORE_API_GODOT_INPUT_EVENT_TYPE_DEFINED
+typedef struct godot_input_event {
+	uint8_t _dont_touch_that[56];
+} godot_input_event;
+#endif
+
+/////// Dictionary
+
+#ifndef GODOT_CORE_API_GODOT_DICITIONARY_TYPE_DEFINED
+typedef struct godot_dictionary {
+	uint8_t _dont_touch_that[8];
+} godot_dictionary;
+#endif
+
+/////// Array
+
+#ifndef GODOT_CORE_API_GODOT_ARRAY_TYPE_DEFINED
+typedef struct godot_array {
+	uint8_t _dont_touch_that[8];
+} godot_array;
+#endif
+
+/////// PoolByteArray
+
+#ifndef GODOT_CORE_API_GODOT_POOL_BYTE_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_byte_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_byte_array;
+#endif
+
+/////// PoolIntArray
+
+#ifndef GODOT_CORE_API_GODOT_POOL_INT_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_int_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_int_array;
+#endif
+
+/////// PoolRealArray
+
+#ifndef GODOT_CORE_API_GODOT_POOL_REAL_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_real_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_real_array;
+#endif
+
+/////// PoolStringArray
+
+#ifndef GODOT_CORE_API_GODOT_POOL_STRING_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_string_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_string_array;
+#endif
+
+/////// PoolVector2Array
+
+#ifndef GODOT_CORE_API_GODOT_POOL_VECTOR2_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_vector2_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_vector2_array;
+#endif
+
+/////// PoolVector3Array
+
+#ifndef GODOT_CORE_API_GODOT_POOL_VECTOR3_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_vector3_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_vector3_array;
+#endif
+
+/////// PoolColorArray
+
+#ifndef GODOT_CORE_API_GODOT_POOL_COLOR_ARRAY_TYPE_DEFINED
+typedef struct godot_pool_color_array {
+	uint8_t _dont_touch_that[8];
+} godot_pool_color_array;
+#endif
+
 
 
 
