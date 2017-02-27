@@ -8,9 +8,14 @@ extern "C" {
 
 #include "../godot_core_api.h"
 
-void GDAPI godot_rect3_new(godot_rect3 *p_rect3);
+void GDAPI godot_rect3_new(godot_rect3 *p_rect);
+void GDAPI godot_rect3_new_with_pos_and_size(godot_rect3 *p_rect, const godot_vector3 *p_pos, const godot_vector3 *p_size);
 
-void GDAPI godot_rect3_destroy(godot_rect3 *p_rect3);
+godot_vector3 GDAPI *godot_rect3_get_pos(godot_rect3 *p_rect);
+void GDAPI godot_rect3_set_pos(godot_rect3 *p_rect, const godot_vector3 *p_pos);
+
+godot_vector3 GDAPI *godot_rect3_get_size(godot_rect3 *p_rect);
+void GDAPI godot_rect3_set_size(godot_rect3 *p_rect, const godot_vector3 *p_size);
 
 
 #ifdef __cplusplus

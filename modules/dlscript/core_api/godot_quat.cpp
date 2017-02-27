@@ -1,7 +1,6 @@
 #include "godot_string.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
+#include "math/quat.h"
 
 #include <memory.h> // why is there no <cmemory> btw?
 
@@ -9,74 +8,73 @@
 extern "C" {
 #endif
 
-void _string_api_anchor() {
+void _quat_api_anchor() {
 
 }
 
+void GDAPI godot_quat_new(godot_quat *p_quat) {
+	Quat *quat = (Quat *) p_quat;
+	*quat = Quat();
+}
 
-void GDAPI godot_string_new(godot_string *p_str) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	// *p = String(); // useless here
+void GDAPI godot_quat_new_with_elements(godot_quat *p_quat, const godot_real x, const godot_real y, const godot_real z, const godot_real w) {
+	Quat *quat = (Quat *) p_quat;
+	*quat = Quat(x, y, z, w);
+}
+
+void GDAPI godot_quat_new_with_rotation(godot_quat *p_quat, const godot_vector3 *p_axis, const godot_real p_angle) {
+	Quat *quat = (Quat *) p_quat;
+	const Vector3 *axis = (const Vector3 *) p_axis;
+	*quat = Quat(*axis, p_angle);
+}
+
+void GDAPI godot_quat_new_with_shortest_arc(godot_quat *p_quat, const godot_vector3 *p_v0, const godot_vector3 *p_v1) {
+	Quat *quat = (Quat *) p_quat;
+	const Vector3 *v0 = (const Vector3 *) p_v0;
+	const Vector3 *v1 = (const Vector3 *) p_v1;
+	*quat = Quat(*v0, *v1);
 }
 
 
-void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, const int p_size) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	*p = String::utf8(p_contents, p_size);
+godot_vector3 GDAPI godot_quat_get_euler(const godot_quat *p_quat) {
+	Quat *quat = (Quat *) p_quat;
+	Vector3 euler = quat->get_euler();
+	return *(godot_vector3 *) &euler;
 }
 
+void GDAPI godot_quat_set_euler(godot_quat *p_quat, const godot_vector3 *p_euler) {
+	Quat *quat = (Quat *) p_quat;
+	const Vector3 *euler = (const Vector3 *) p_euler;
+	quat->set_euler(*euler);
+}
 
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
-	String *p = (String *) p_str;
-	if (p_size != NULL) {
-		*p_size = p->utf8().length();
+godot_real GDAPI *godot_quat_index(godot_quat *p_quat, const godot_int p_idx) {
+	Quat *quat = (Quat *) p_quat;
+	switch (p_idx) {
+	case 0:
+		return &quat->x;
+	case 1:
+		return &quat->y;
+	case 2:
+		return &quat->z;
+	default:
+		return &quat->y;
 	}
-	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
+}
+
+godot_real GDAPI godot_quat_const_index(const godot_quat *p_quat, const godot_int p_idx) {
+	const Quat *quat = (const Quat *) p_quat;
+	switch (p_idx) {
+	case 0:
+		return quat->x;
+	case 1:
+		return quat->y;
+	case 2:
+		return quat->z;
+	default:
+		return quat->y;
 	}
 }
-
-void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_string *p_src) {
-	String *dest = (String *) p_dest;
-	String *src  = (String *) p_src;
-
-	*dest = *src;
-}
-
-
-
-godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a == *b;
-}
-
-godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a < *b;
-}
-
-void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b) {
-	String *dest = (String *) p_dest;
-	const String *a = (String *) p_a;
-	const String *b = (String *) p_b;
-
-	String tmp = *a + *b;
-	godot_string_new(p_dest);
-	*dest = tmp;
-}
-
-
-
-
-void GDAPI godot_string_destroy(godot_string *p_str) {
-	String *p = (String *) p_str;
-	p->~String();
-}
-
 
 
 

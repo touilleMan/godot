@@ -1,82 +1,51 @@
-#include "godot_string.h"
+#include "godot_plane.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
-
-#include <memory.h> // why is there no <cmemory> btw?
+#include "math/plane.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void _string_api_anchor() {
+void _plane_api_anchor() {
 
 }
 
 
-void GDAPI godot_string_new(godot_string *p_str) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	// *p = String(); // useless here
+void GDAPI godot_plane_new(godot_plane *p_pl) {
+	Plane *pl = (Plane *) p_pl;
+	*pl = Plane();
 }
 
-
-void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, const int p_size) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	*p = String::utf8(p_contents, p_size);
+void GDAPI godot_plane_new_with_normal(godot_plane *p_pl, const godot_vector3 *p_normal, const godot_real p_d) {
+	Plane *pl = (Plane *) p_pl;
+	const Vector3 *normal = (const Vector3 *) p_normal;
+	*pl = Plane(*normal, p_d);
 }
 
-
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
-	String *p = (String *) p_str;
-	if (p_size != NULL) {
-		*p_size = p->utf8().length();
-	}
-	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
-	}
+void GDAPI godot_plane_set_normal(godot_plane *p_pl, const godot_vector3 *p_normal) {
+	Plane *pl = (Plane *) p_pl;
+	const Vector3 *normal = (const Vector3 *) p_normal;
+	pl->set_normal(*normal);
 }
 
-void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_string *p_src) {
-	String *dest = (String *) p_dest;
-	String *src  = (String *) p_src;
-
-	*dest = *src;
+godot_vector3 godot_plane_get_normal(const godot_plane *p_pl) {
+	const Plane *pl = (const Plane *) p_pl;
+	const Vector3 normal = pl->get_normal();
+	godot_vector3 *v3 = (godot_vector3 *) &normal;
+	return *v3;
 }
 
 
 
-godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a == *b;
+void GDAPI godot_plane_set_d(godot_plane *p_pl, const godot_real p_d) {
+	Plane *pl = (Plane *) p_pl;
+	pl->d = p_d;
 }
 
-godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a < *b;
+godot_real GDAPI godot_plane_get_d(const godot_plane *p_pl) {
+	const Plane *pl = (const Plane *) p_pl;
+	return pl->d;
 }
-
-void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b) {
-	String *dest = (String *) p_dest;
-	const String *a = (String *) p_a;
-	const String *b = (String *) p_b;
-
-	String tmp = *a + *b;
-	godot_string_new(p_dest);
-	*dest = tmp;
-}
-
-
-
-
-void GDAPI godot_string_destroy(godot_string *p_str) {
-	String *p = (String *) p_str;
-	p->~String();
-}
-
 
 
 
