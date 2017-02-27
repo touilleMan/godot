@@ -73,12 +73,6 @@ typedef struct godot_string {
 } godot_string;
 #endif
 
-#ifndef GODOT_CORE_API_GODOT_STRING_NAME_TYPE_DEFINED
-typedef struct godot_string_name {
-	uint8_t _dont_touch_that[8];
-} godot_string_name;
-#endif
-
 #include "core_api/godot_string.h"
 
 
@@ -123,6 +117,8 @@ typedef struct godot_plane {
 } godot_plane;
 #endif
 
+#include "core_api/godot_plane.h"
+
 /////// Quat
 
 #ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
@@ -130,6 +126,8 @@ typedef struct godot_quat {
 	uint8_t _dont_touch_that[16];
 } godot_quat;
 #endif
+
+#include "core_api/godot_quat.h"
 
 /////// Rect3
 
@@ -139,6 +137,8 @@ typedef struct godot_rect3 {
 } godot_rect3;
 #endif
 
+#include "core_api/godot_rect3.h"
+
 /////// Basis
 
 #ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
@@ -146,6 +146,8 @@ typedef struct godot_basis {
 	uint8_t _dont_touch_that[36];
 } godot_basis;
 #endif
+
+#include "core_api/godot_basis.h"
 
 /////// Transform
 
@@ -155,6 +157,8 @@ typedef struct godot_transform {
 } godot_transform;
 #endif
 
+#include "core_api/godot_transform.h"
+
 /////// Color
 
 #ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
@@ -162,6 +166,8 @@ typedef struct godot_color {
 	uint8_t _dont_touch_that[16];
 } godot_color;
 #endif
+
+#include "core_api/godot_color.h"
 
 /////// Image
 
@@ -171,6 +177,8 @@ typedef struct godot_image {
 } godot_image;
 #endif
 
+#include "core_api/godot_image.h"
+
 /////// NodePath
 
 #ifndef GODOT_CORE_API_GODOT_NODE_PATH_TYPE_DEFINED
@@ -178,6 +186,8 @@ typedef struct godot_node_path {
 	uint8_t _dont_touch_that[8];
 } godot_node_path;
 #endif
+
+#include "core_api/godot_node_path.h"
 
 /////// RID
 
@@ -187,6 +197,8 @@ typedef struct godot_rid {
 } godot_rid;
 #endif
 
+#include "core_api/godot_rid.h"
+
 /////// InputEvent
 
 #ifndef GODOT_CORE_API_GODOT_INPUT_EVENT_TYPE_DEFINED
@@ -194,6 +206,8 @@ typedef struct godot_input_event {
 	uint8_t _dont_touch_that[56];
 } godot_input_event;
 #endif
+
+#include "core_api/godot_input_event.h"
 
 /////// Dictionary
 
@@ -203,6 +217,8 @@ typedef struct godot_dictionary {
 } godot_dictionary;
 #endif
 
+#include "core_api/godot_dictionary.h"
+
 /////// Array
 
 #ifndef GODOT_CORE_API_GODOT_ARRAY_TYPE_DEFINED
@@ -210,6 +226,8 @@ typedef struct godot_array {
 	uint8_t _dont_touch_that[8];
 } godot_array;
 #endif
+
+#include "core_api/godot_array.h"
 
 /////// PoolByteArray
 
@@ -268,6 +286,8 @@ typedef struct godot_pool_color_array {
 #endif
 
 
+// single API file for Pool*Array
+#include "core_api/godot_pool_arrays.h"
 
 
 
