@@ -3,7 +3,7 @@
 
 #include "class_db.h"
 #include "os/file_access.h"
-#include "core/globals.h"
+#include "core/global_config.h"
 
 
 // helper stuff

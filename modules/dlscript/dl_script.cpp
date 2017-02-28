@@ -28,14 +28,14 @@
 /*************************************************************************/
 #include "dl_script.h"
 
-#include "globals.h"
+#include "global_config.h"
 #include "global_constants.h"
 #include "os/file_access.h"
 #include "io/file_access_encrypted.h"
 #include "os/os.h"
 
 #ifdef TOOLS_ENABLED
-#include "editor/editor_import_export.h"
+// #include "editor/editor_import_export.h"
 #endif
 
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
@@ -209,13 +209,13 @@ void DLScript::set_script_name(StringName p_script_name) {
 }
 
 void DLScript::_bind_methods() {
-	ClassDB::bind_method(_MD("get_library"),&DLScript::get_library);
-	ClassDB::bind_method(_MD("set_library", "library"),&DLScript::set_library);
-	ClassDB::bind_method(_MD("get_script_name"),&DLScript::get_script_name);
-	ClassDB::bind_method(_MD("set_script_name", "script_name"),&DLScript::set_script_name);
+	ClassDB::bind_method(D_METHOD("get_library"),&DLScript::get_library);
+	ClassDB::bind_method(D_METHOD("set_library", "library"),&DLScript::set_library);
+	ClassDB::bind_method(D_METHOD("get_script_name"),&DLScript::get_script_name);
+	ClassDB::bind_method(D_METHOD("set_script_name", "script_name"),&DLScript::set_script_name);
 	
-	ADD_PROPERTYNZ( PropertyInfo( Variant::OBJECT, "library", PROPERTY_HINT_RESOURCE_TYPE,"DLLibrary"), _SCS("set_library"),_SCS("get_library"));
-	ADD_PROPERTYNZ( PropertyInfo( Variant::STRING, "script_name"), _SCS("set_script_name"),_SCS("get_script_name"));
+	ADD_PROPERTYNZ( PropertyInfo( Variant::OBJECT, "library", PROPERTY_HINT_RESOURCE_TYPE,"DLLibrary"), "set_library", "get_library");
+	ADD_PROPERTYNZ( PropertyInfo( Variant::STRING, "script_name"), "set_script_name", "get_script_name");
 }
 
 DLScript::DLScript() {
@@ -463,8 +463,8 @@ void DLLibrary::_notification(int what) {
 }
 
 void DLLibrary::_bind_methods() {
-	ClassDB::bind_method(_MD("set_platform_file", "platform", "file"),&DLLibrary::set_platform_file);
-	ClassDB::bind_method(_MD("get_platform_file", "platform"),&DLLibrary::get_platform_file);
+	ClassDB::bind_method(D_METHOD("set_platform_file", "platform", "file"),&DLLibrary::set_platform_file);
+	ClassDB::bind_method(D_METHOD("get_platform_file", "platform"),&DLLibrary::get_platform_file);
 }
 
 DLLibrary::DLLibrary() {

@@ -37,7 +37,7 @@
 
 #include "variant.h"
 #include "dl_script.h"
-#include "globals.h"
+#include "global_config.h"
 #include "class_db.h"
 
 
