@@ -1,11 +1,19 @@
 #ifndef GODOT_VECTOR3_H
 #define GODOT_VECTOR3_H
 
-#include "../godot_core_api.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
+typedef struct godot_vector3 {
+	uint8_t _dont_touch_that[12];
+} godot_vector3;
+#endif
+
+#include "../godot_core_api.h"
 
 void GDAPI godot_vector3_new(godot_vector3 *p_v, const godot_real p_x, const godot_real p_y, const godot_real p_z);
 

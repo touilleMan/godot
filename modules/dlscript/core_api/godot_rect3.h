@@ -5,6 +5,14 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_RECT3_TYPE_DEFINED
+typedef struct godot_rect3 {
+	uint8_t _dont_touch_that[24];
+} godot_rect3;
+#endif
+
 
 #include "../godot_core_api.h"
 

@@ -140,94 +140,48 @@ typedef struct godot_string {
 
 ////// Vector2
 
-#ifndef GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
-#define GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
-typedef struct godot_vector2 {
-	uint8_t _dont_touch_that[8];
-} godot_vector2;
-#endif
+
 
 #include "core_api/godot_vector2.h"
 
 ////// Vector3
 
-#ifndef GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
-typedef struct godot_vector3 {
-	uint8_t _dont_touch_that[12];
-} godot_vector3;
-#endif
+
 
 #include "core_api/godot_vector3.h"
 
 
 ////// Transform2D
 
-#ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
-typedef struct godot_transform2d {
-	uint8_t _dont_touch_that[24];
-} godot_transform2d;
-#endif
 
 #include "core_api/godot_transform2d.h"
 
 
 /////// Plane
 
-#ifndef GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
-typedef struct godot_plane {
-	uint8_t _dont_touch_that[16];
-} godot_plane;
-#endif
+
 
 #include "core_api/godot_plane.h"
 
 /////// Quat
 
-#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
-typedef struct godot_quat {
-	uint8_t _dont_touch_that[16];
-} godot_quat;
-#endif
-
 #include "core_api/godot_quat.h"
 
 /////// Rect3
 
-#ifndef GODOT_CORE_API_GODOT_RECT3_TYPE_DEFINED
-typedef struct godot_rect3 {
-	uint8_t _dont_touch_that[24];
-} godot_rect3;
-#endif
 
 #include "core_api/godot_rect3.h"
 
 /////// Basis
 
-#ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
-typedef struct godot_basis {
-	uint8_t _dont_touch_that[36];
-} godot_basis;
-#endif
 
 #include "core_api/godot_basis.h"
 
 /////// Transform
 
-#ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
-typedef struct godot_transform {
-	uint8_t _dont_touch_that[48];
-} godot_transform;
-#endif
-
 #include "core_api/godot_transform.h"
 
 /////// Color
-
-#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
-typedef struct godot_color {
-	uint8_t _dont_touch_that[16];
-} godot_color;
-#endif
 
 #include "core_api/godot_color.h"
 
@@ -249,11 +203,6 @@ typedef struct godot_color {
 
 /////// Dictionary
 
-#ifndef GODOT_CORE_API_GODOT_DICITIONARY_TYPE_DEFINED
-typedef struct godot_dictionary {
-	uint8_t _dont_touch_that[8];
-} godot_dictionary;
-#endif
 
 #include "core_api/godot_dictionary.h"
 

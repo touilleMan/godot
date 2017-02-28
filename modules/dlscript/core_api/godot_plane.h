@@ -5,8 +5,15 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 
-#include "../godot_core_api.h"
+#ifndef GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
+typedef struct godot_plane {
+	uint8_t _dont_touch_that[16];
+} godot_plane;
+#endif
+
+#include "godot_vector3.h"
 
 void GDAPI godot_plane_new(godot_plane *p_pl);
 void GDAPI godot_plane_new_with_normal(godot_plane *p_pl, const godot_vector3 *p_normal, const godot_real p_d);

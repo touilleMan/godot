@@ -5,6 +5,14 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_DICITIONARY_TYPE_DEFINED
+typedef struct godot_dictionary {
+	uint8_t _dont_touch_that[8];
+} godot_dictionary;
+#endif
+
 
 #include "../godot_core_api.h"
 

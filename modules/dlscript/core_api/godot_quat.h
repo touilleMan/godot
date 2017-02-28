@@ -5,6 +5,13 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
+typedef struct godot_quat {
+	uint8_t _dont_touch_that[16];
+} godot_quat;
+#endif
 
 #include "../godot_core_api.h"
 

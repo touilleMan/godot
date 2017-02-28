@@ -1,11 +1,20 @@
 #ifndef GODOT_VECTOR2_H
 #define GODOT_VECTOR2_H
 
-#include "../godot_core_api.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
+#define GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
+typedef struct godot_vector2 {
+	uint8_t _dont_touch_that[8];
+} godot_vector2;
+#endif
+
+#include "../godot_core_api.h"
 
 void GDAPI godot_vector2_new(godot_vector2 *p_v, const godot_real p_x, const godot_real p_y);
 

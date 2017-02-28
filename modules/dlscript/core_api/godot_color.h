@@ -5,6 +5,14 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+typedef struct godot_color {
+	uint8_t _dont_touch_that[16];
+} godot_color;
+#endif
+
 
 #include "../godot_core_api.h"
 

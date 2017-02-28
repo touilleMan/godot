@@ -7,6 +7,16 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+typedef struct godot_transform2d {
+	uint8_t _dont_touch_that[24];
+} godot_transform2d;
+#endif
+
+#include "godot_vector2.h"
+
 void GDAPI godot_transform2d_new_identity(godot_transform2d *p_t);
 void GDAPI godot_transform2d_new_elements(godot_transform2d *p_t, const godot_vector2 *p_a, const godot_vector2 *p_b, const godot_vector2 *p_c);
 void GDAPI godot_transform2d_new(godot_transform2d *p_t, const godot_real p_rot, const godot_vector2 *p_pos);
