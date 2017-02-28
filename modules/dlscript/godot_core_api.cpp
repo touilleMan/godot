@@ -62,7 +62,7 @@ extern "C" void _image_api_anchor();
 extern "C" void _node_path_api_anchor();
 extern "C" void _rid_api_anchor();
 extern "C" void _input_event_api_anchor();
-// extern "C" void _dictionary_api_anchor();
+extern "C" void _dictionary_api_anchor();
 extern "C" void _array_api_anchor();
 extern "C" void _pool_arrays_api_anchor();
 extern "C" void _variant_api_anchor();
@@ -83,7 +83,7 @@ void _api_anchor() {
 	_node_path_api_anchor();
 	_rid_api_anchor();
 	_input_event_api_anchor();
-	// _dictionary_api_anchor();
+	_dictionary_api_anchor();
 	_array_api_anchor();
 	_pool_arrays_api_anchor();
 	_variant_api_anchor();

@@ -14,9 +14,32 @@ typedef struct godot_dictionary {
 #endif
 
 
-#include "../godot_core_api.h"
+#include "godot_variant.h"
+#include "godot_array.h"
 
 void GDAPI godot_dictionary_new(godot_dictionary *p_dict);
+
+void GDAPI godot_dictionary_clear(godot_dictionary *p_dict);
+
+godot_bool GDAPI godot_dictionary_empty(const godot_dictionary *p_dict);
+
+void GDAPI godot_dictionary_erase(godot_dictionary *p_dict, const godot_variant *p_key);
+
+godot_bool GDAPI godot_dictionary_has(const godot_dictionary *p_dict, const godot_variant *p_key);
+
+godot_bool GDAPI godot_dictionary_has_all(const godot_dictionary *p_dict, const godot_array *p_keys);
+
+uint32_t GDAPI godot_dictionary_hash(const godot_dictionary *p_dict);
+
+godot_array GDAPI godot_dictionary_keys(const godot_dictionary *p_dict);
+
+godot_int GDAPI godot_dictionary_parse_json(godot_dictionary *p_dict, const godot_string *p_json);
+
+godot_int GDAPI godot_dictionary_size(const godot_dictionary *p_dict);
+
+godot_string GDAPI godot_dictionary_to_json(const godot_dictionary *p_dict);
+
+godot_array GDAPI godot_dictionary_values(const godot_dictionary *p_dict);
 
 void GDAPI godot_dictionary_destroy(godot_dictionary *p_dict);
 
