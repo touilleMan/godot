@@ -1,11 +1,22 @@
 #ifndef GODOT_VARIANT_H
 #define GODOT_VARIANT_H
 
-#include "../godot_core_api.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+
+#ifndef GODOT_CORE_API_GODOT_VARIANT_TYPE_DEFINED
+typedef struct godot_variant {
+	uint8_t _dont_touch_that[24];
+} godot_variant;
+#endif
+
+
+#include "../godot_core_api.h"
 
 void GDAPI godot_variant_new(godot_variant *p_v);
 

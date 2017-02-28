@@ -225,14 +225,7 @@ void GDAPI godot_object_destroy(godot_object **p_o);
 
 ////// Variant
 
-#ifndef GODOT_CORE_API_GODOT_VARIANT_TYPE_DEFINED
-typedef struct godot_variant {
-	uint8_t _dont_touch_that[24];
-} godot_variant;
-
 #include "core_api/godot_variant.h"
-
-#endif
 
 ////// InputEvent
 
