@@ -1,4 +1,4 @@
-#include "godot_string.h"
+#include "godot_rid.h"
 
 #include "object.h"
 #include "resource.h"

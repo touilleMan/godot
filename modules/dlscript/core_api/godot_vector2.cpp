@@ -1,6 +1,6 @@
 #include "godot_vector2.h"
 
-#include "core/math/math_2d.h"
+#include "math/math_2d.h"
 
 #ifdef __cplusplus
 extern "C" {

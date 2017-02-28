@@ -1,6 +1,6 @@
 #include "godot_vector3.h"
 
-#include "core/math/vector3.h"
+#include "math/vector3.h"
 
 #ifdef __cplusplus
 extern "C" {

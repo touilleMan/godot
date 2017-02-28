@@ -2,7 +2,7 @@
 
 #include "../godot_core_api.h"
 
-#include "core/variant.h"
+#include "variant.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,4 +1,4 @@
-#include "godot_string.h"
+#include "godot_image.h"
 
 #include "image.h"
 

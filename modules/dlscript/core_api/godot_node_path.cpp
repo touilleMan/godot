@@ -1,4 +1,4 @@
-#include "godot_string.h"
+#include "godot_node_path.h"
 
 #include "path_db.h"
 
@@ -26,9 +26,11 @@ void GDAPI godot_node_path_new(godot_node_path *p_np, const godot_string *p_from
 
 godot_string GDAPI godot_node_path_get_name(const godot_node_path *p_np, const godot_int p_idx) {
 	const NodePath *np = (const NodePath *) p_np;
-	String s = np->get_name(p_idx);
-	godot_string *str = (godot_string *) &s;
-	return *str;
+	godot_string str;
+	String *s = (String *) &str;
+	memnew_placement(s, String);
+	*s = np->get_name(p_idx);
+	return str;
 }
 
 godot_int GDAPI godot_node_path_get_name_count(const godot_node_path *p_np) {
@@ -38,16 +40,20 @@ godot_int GDAPI godot_node_path_get_name_count(const godot_node_path *p_np) {
 
 godot_string GDAPI godot_node_path_get_property(const godot_node_path *p_np) {
 	const NodePath *np = (const NodePath *) p_np;
-	String s = np->get_property();
-	godot_string *str = (godot_string *) &s;
-	return *str;
+	godot_string str;
+	String *s = (String *) &str;
+	memnew_placement(s, String);
+	*s = np->get_property();
+	return str;
 }
 
 godot_string GDAPI godot_node_path_get_subname(const godot_node_path *p_np, const godot_int p_idx) {
 	const NodePath *np = (const NodePath *) p_np;
-	String s = np->get_subname(p_idx);
-	godot_string *str = (godot_string *) &s;
-	return *str;
+	godot_string str;
+	String *s = (String *) &str;
+	memnew_placement(s, String);
+	*s = np->get_subname(p_idx);
+	return str;
 }
 
 godot_int GDAPI godot_node_path_get_subname_count(const godot_node_path *p_np) {
@@ -70,9 +76,11 @@ godot_bool GDAPI godot_node_path_is_empty(const godot_node_path *p_np) {
 
 godot_string GDAPI godot_node_path_as_string(const godot_node_path *p_np) {
 	const NodePath *np = (const NodePath *) p_np;
-	String s = *np;
-	godot_string *str = (godot_string *) &s;
-	return *str;
+	godot_string str;
+	String *s = (String *) &str;
+	memnew_placement(s, String);
+	*s = *np;
+	return str;
 }
 
 void GDAPI godot_node_path_destroy(godot_node_path *p_np) {

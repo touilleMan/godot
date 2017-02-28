@@ -1,7 +1,7 @@
 #include "godot_string.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
+#include "ustring.h"
+#include "string_db.h"
 
 #include <memory.h> // why is there no <cmemory> btw?
 
