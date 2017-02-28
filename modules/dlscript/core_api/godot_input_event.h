@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 #ifndef GODOT_CORE_API_GODOT_INPUT_EVENT_TYPE_DEFINED
 typedef struct godot_input_event {
 	uint8_t _dont_touch_that[56];

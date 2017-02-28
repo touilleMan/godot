@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 
 #ifndef GODOT_CORE_API_GODOT_IMAGE_TYPE_DEFINED
 typedef struct godot_image {

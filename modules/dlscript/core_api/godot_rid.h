@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 
 #ifndef GODOT_CORE_API_GODOT_RID_TYPE_DEFINED
 typedef struct godot_rid {

@@ -259,12 +259,6 @@ typedef struct godot_dictionary {
 
 /////// Array
 
-#ifndef GODOT_CORE_API_GODOT_ARRAY_TYPE_DEFINED
-typedef struct godot_array {
-	uint8_t _dont_touch_that[8];
-} godot_array;
-#endif
-
 #include "core_api/godot_array.h"
 
 
