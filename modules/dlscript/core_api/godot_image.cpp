@@ -1,82 +1,93 @@
 #include "godot_string.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
-
-#include <memory.h> // why is there no <cmemory> btw?
+#include "image.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void _string_api_anchor() {
+void _image_api_anchor() {
 
 }
 
 
-void GDAPI godot_string_new(godot_string *p_str) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	// *p = String(); // useless here
+#define memnew_placement_custom(m_placement,m_class, m_constr) _post_initialize(new(m_placement,sizeof(m_class),"") m_constr)
+
+
+void GDAPI godot_image_new(godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	memnew_placement_custom(img, Image, Image());
 }
 
-
-void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, const int p_size) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	*p = String::utf8(p_contents, p_size);
+void GDAPI godot_image_new_with_png_jpg(godot_image *p_img, const uint8_t *p_mem_png_jpg, int p_len) {
+	Image *img = (Image *) p_img;
+	memnew_placement_custom(img, Image, Image(p_mem_png_jpg, p_len));
 }
 
-
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
-	String *p = (String *) p_str;
-	if (p_size != NULL) {
-		*p_size = p->utf8().length();
-	}
-	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
-	}
+void GDAPI godot_image_new_with_xpm(godot_image *p_img, const char **p_xpm) {
+	Image *img = (Image *) p_img;
+	memnew_placement_custom(img, Image, Image(p_xpm));
 }
 
-void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_string *p_src) {
-	String *dest = (String *) p_dest;
-	String *src  = (String *) p_src;
-
-	*dest = *src;
+void GDAPI godot_image_new_with_size_format(godot_image *p_img, int p_width, int p_height, bool p_use_mipmaps, godot_image_format p_format) {
+	Image *img = (Image *) p_img;
+	memnew_placement_custom(img, Image, Image(p_width, p_height, p_use_mipmaps, (Image::Format) p_format));
 }
 
-
-
-godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a == *b;
-}
-
-godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a < *b;
-}
-
-void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b) {
-	String *dest = (String *) p_dest;
-	const String *a = (String *) p_a;
-	const String *b = (String *) p_b;
-
-	String tmp = *a + *b;
-	godot_string_new(p_dest);
-	*dest = tmp;
+void GDAPI godot_image_new_with_size_format_data(godot_image *p_img, int p_width, int p_height, bool p_use_mipmaps, godot_image_format p_format, godot_pool_byte_array *p_data) {
+	Image *img = (Image *) p_img;
+	PoolVector<uint8_t> *data = (PoolVector<uint8_t> *) p_data;
+	memnew_placement_custom(img, Image, Image(p_width, p_height, p_use_mipmaps, (Image::Format) p_format, *data));
 }
 
 
 
-
-void GDAPI godot_string_destroy(godot_string *p_str) {
-	String *p = (String *) p_str;
-	p->~String();
+godot_pool_byte_array GDAPI godot_image_get_data(godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	PoolVector<uint8_t> cpp_data = img->get_data();
+	godot_pool_byte_array *data = (godot_pool_byte_array *) &cpp_data;
+	return *data;
 }
 
+
+godot_error GDAPI godot_image_load(godot_image *p_img, const godot_string *p_path) {
+	Image *img = (Image *) p_img;
+	String *path = (String *) p_path;
+	return (godot_error) img->load(*path);
+}
+
+godot_error GDAPI godot_image_save_png(godot_image *p_img, const godot_string *p_path) {
+	Image *img = (Image *) p_img;
+	String *path = (String *) p_path;
+	return (godot_error) img->save_png(*path);
+}
+
+
+int GDAPI godot_image_get_width(const godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	return img->get_width();
+}
+
+int GDAPI godot_image_get_height(const godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	return img->get_height();
+}
+
+godot_bool GDAPI godot_image_has_mipmaps(const godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	return img->has_mipmaps();
+}
+
+int GDAPI godot_image_get_mipmap_count(const godot_image *p_img) {
+	Image *img = (Image *) p_img;
+	return img->get_mipmap_count();
+}
+
+
+
+void GDAPI godot_image_destroy(godot_image *p_img) {
+	memdelete((Image *) p_img);
+}
 
 
 

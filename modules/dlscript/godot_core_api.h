@@ -48,6 +48,65 @@ extern "C" {
 #define GODOT_API_VERSION 1
 
 
+
+////// Error
+
+enum godot_error {
+	GODOT_OK,
+	GODOT_FAILED, ///< Generic fail error
+	GODOT_ERR_UNAVAILABLE, ///< What is requested is unsupported/unavailable
+	GODOT_ERR_UNCONFIGURED, ///< The object being used hasnt been properly set up yet
+	GODOT_ERR_UNAUTHORIZED, ///< Missing credentials for requested resource
+	GODOT_ERR_PARAMETER_RANGE_ERROR, ///< Parameter given out of range (5)
+	GODOT_ERR_OUT_OF_MEMORY, ///< Out of memory
+	GODOT_ERR_FILE_NOT_FOUND,
+	GODOT_ERR_FILE_BAD_DRIVE,
+	GODOT_ERR_FILE_BAD_PATH,
+	GODOT_ERR_FILE_NO_PERMISSION,	// (10)
+	GODOT_ERR_FILE_ALREADY_IN_USE,
+	GODOT_ERR_FILE_CANT_OPEN,
+	GODOT_ERR_FILE_CANT_WRITE,
+	GODOT_ERR_FILE_CANT_READ,
+	GODOT_ERR_FILE_UNRECOGNIZED, // (15)
+	GODOT_ERR_FILE_CORRUPT,
+	GODOT_ERR_FILE_MISSING_DEPENDENCIES,
+	GODOT_ERR_FILE_EOF,
+	GODOT_ERR_CANT_OPEN, ///< Can't open a resource/socket/file
+	GODOT_ERR_CANT_CREATE,		// (20)
+	GODOT_ERR_QUERY_FAILED,
+	GODOT_ERR_ALREADY_IN_USE,
+	GODOT_ERR_LOCKED, ///< resource is locked
+	GODOT_ERR_TIMEOUT,
+	GODOT_ERR_CANT_CONNECT,		// (25)
+	GODOT_ERR_CANT_RESOLVE,
+	GODOT_ERR_CONNECTION_ERROR,
+	GODOT_ERR_CANT_AQUIRE_RESOURCE,
+	GODOT_ERR_CANT_FORK,
+	GODOT_ERR_INVALID_DATA, ///< Data passed is invalid	(30)
+	GODOT_ERR_INVALID_PARAMETER, ///< Parameter passed is invalid
+	GODOT_ERR_ALREADY_EXISTS, ///< When adding, item already exists
+	GODOT_ERR_DOES_NOT_EXIST, ///< When retrieving/erasing, it item does not exist
+	GODOT_ERR_DATABASE_CANT_READ, ///< database is full
+	GODOT_ERR_DATABASE_CANT_WRITE, ///< database is full	(35)
+	GODOT_ERR_COMPILATION_FAILED,
+	GODOT_ERR_METHOD_NOT_FOUND,
+	GODOT_ERR_LINK_FAILED,
+	GODOT_ERR_SCRIPT_FAILED,
+	GODOT_ERR_CYCLIC_LINK,		// (40)
+	GODOT_ERR_INVALID_DECLARATION,
+	GODOT_ERR_DUPLICATE_SYMBOL,
+	GODOT_ERR_PARSE_ERROR,
+	GODOT_ERR_BUSY,
+	GODOT_ERR_SKIP,			// (45)
+	GODOT_ERR_HELP, ///< user requested help!!
+	GODOT_ERR_BUG, ///< a bug in the software certainly happened, due to a double check failing or unexpected behavior.
+	GODOT_ERR_PRINTER_ON_FIRE, /// the parallel port printer is engulfed in flames
+	GODOT_ERR_OMFG_THIS_IS_VERY_VERY_BAD, ///< shit happens, has never been used, though
+	GODOT_ERR_WTF = GODOT_ERR_OMFG_THIS_IS_VERY_VERY_BAD ///< short version of the above
+};
+typedef enum godot_error godot_error;
+
+
 ////// bool
 
 typedef bool godot_bool;
@@ -64,6 +123,9 @@ typedef int godot_int;
 typedef float godot_real;
 
 typedef double godot_real64; // for Variant in 3.0
+
+/////// Object (forward declared)
+typedef void godot_object;
 
 /////// String
 
@@ -171,41 +233,17 @@ typedef struct godot_color {
 
 /////// Image
 
-#ifndef GODOT_CORE_API_GODOT_IMAGE_TYPE_DEFINED
-typedef struct godot_image {
-	uint8_t _dont_touch_that[32];
-} godot_image;
-#endif
-
 #include "core_api/godot_image.h"
 
 /////// NodePath
-
-#ifndef GODOT_CORE_API_GODOT_NODE_PATH_TYPE_DEFINED
-typedef struct godot_node_path {
-	uint8_t _dont_touch_that[8];
-} godot_node_path;
-#endif
 
 #include "core_api/godot_node_path.h"
 
 /////// RID
 
-#ifndef GODOT_CORE_API_GODOT_RID_TYPE_DEFINED
-typedef struct godot_rid {
-	uint8_t _dont_touch_that[8];
-} godot_rid;
-#endif
-
 #include "core_api/godot_rid.h"
 
 /////// InputEvent
-
-#ifndef GODOT_CORE_API_GODOT_INPUT_EVENT_TYPE_DEFINED
-typedef struct godot_input_event {
-	uint8_t _dont_touch_that[56];
-} godot_input_event;
-#endif
 
 #include "core_api/godot_input_event.h"
 
@@ -229,61 +267,6 @@ typedef struct godot_array {
 
 #include "core_api/godot_array.h"
 
-/////// PoolByteArray
-
-#ifndef GODOT_CORE_API_GODOT_POOL_BYTE_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_byte_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_byte_array;
-#endif
-
-/////// PoolIntArray
-
-#ifndef GODOT_CORE_API_GODOT_POOL_INT_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_int_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_int_array;
-#endif
-
-/////// PoolRealArray
-
-#ifndef GODOT_CORE_API_GODOT_POOL_REAL_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_real_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_real_array;
-#endif
-
-/////// PoolStringArray
-
-#ifndef GODOT_CORE_API_GODOT_POOL_STRING_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_string_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_string_array;
-#endif
-
-/////// PoolVector2Array
-
-#ifndef GODOT_CORE_API_GODOT_POOL_VECTOR2_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_vector2_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_vector2_array;
-#endif
-
-/////// PoolVector3Array
-
-#ifndef GODOT_CORE_API_GODOT_POOL_VECTOR3_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_vector3_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_vector3_array;
-#endif
-
-/////// PoolColorArray
-
-#ifndef GODOT_CORE_API_GODOT_POOL_COLOR_ARRAY_TYPE_DEFINED
-typedef struct godot_pool_color_array {
-	uint8_t _dont_touch_that[8];
-} godot_pool_color_array;
-#endif
 
 
 // single API file for Pool*Array
@@ -292,7 +275,7 @@ typedef struct godot_pool_color_array {
 
 
 
-typedef void godot_object;
+
 
 void GDAPI godot_object_destroy(godot_object **p_o);
 
@@ -435,18 +418,22 @@ godot_method_bind *GDAPI godot_method_bind_get_method(const char *p_classname, c
 void GDAPI godot_method_bind_ptrcall(godot_method_bind *p_method_bind, godot_object *p_instance, const void **p_args, void *p_ret);
 
 ////// Script API
-#define GODOT_METHOD_RPC_MODE_DISABLED 0
-#define GODOT_METHOD_RPC_MODE_REMOTE 1
-#define GODOT_METHOD_RPC_MODE_SYNC 2
-#define GODOT_METHOD_RPC_MODE_MASTER 3
-#define GODOT_METHOD_RPC_MODE_SLAVE 4
+
+enum godot_method_rpc_mode {
+	GODOT_METHOD_RPC_MODE_DISABLED,
+	GODOT_METHOD_RPC_MODE_REMOTE,
+	GODOT_METHOD_RPC_MODE_SYNC,
+	GODOT_METHOD_RPC_MODE_MASTER,
+	GODOT_METHOD_RPC_MODE_SLAVE,
+};
+typedef enum godot_method_rpc_mode godot_method_rpc_mode;
 
 typedef struct godot_method_attributes {
-	godot_int rpc_type;
+	godot_method_rpc_mode rpc_type;
 } godot_method_attributes;
 
 typedef struct godot_property_attributes {
-	godot_int rset_type;
+	godot_method_rpc_mode rset_type;
 
 	godot_bool listed;
 	godot_int type;

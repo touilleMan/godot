@@ -57,6 +57,11 @@ extern "C" void _quat_api_anchor();
 extern "C" void _basis_api_anchor();
 extern "C" void _rect3_api_anchor();
 extern "C" void _transform_api_anchor();
+extern "C" void _color_api_anchor();
+extern "C" void _image_api_anchor();
+extern "C" void _node_path_api_anchor();
+extern "C" void _rid_api_anchor();
+extern "C" void _input_event_api_anchor();
 extern "C" void _variant_api_anchor();
 
 void _api_anchor() {
@@ -70,6 +75,11 @@ void _api_anchor() {
 	_rect3_api_anchor();
 	_basis_api_anchor();
 	_transform_api_anchor();
+	_color_api_anchor();
+	_image_api_anchor();
+	_node_path_api_anchor();
+	_rid_api_anchor();
+	_input_event_api_anchor();
 	_variant_api_anchor();
 }
 

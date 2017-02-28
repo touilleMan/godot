@@ -1,7 +1,6 @@
 #include "godot_string.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
+#include "path_db.h"
 
 #include <memory.h> // why is there no <cmemory> btw?
 
@@ -9,76 +8,76 @@
 extern "C" {
 #endif
 
-void _string_api_anchor() {
+void _node_path_api_anchor() {
 
 }
 
 
-void GDAPI godot_string_new(godot_string *p_str) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	// *p = String(); // useless here
+#define memnew_placement_custom(m_placement,m_class, m_constr) _post_initialize(new(m_placement,sizeof(m_class),"") m_constr)
+
+// @Bug ?
+// Do I need to memnew_placement when returning strings?
+
+void GDAPI godot_node_path_new(godot_node_path *p_np, const godot_string *p_from) {
+	NodePath *np = (NodePath *) p_np;
+	String *from = (String *) p_from;
+	memnew_placement_custom(np, NodePath, NodePath(*from));
+}
+
+godot_string GDAPI godot_node_path_get_name(const godot_node_path *p_np, const godot_int p_idx) {
+	const NodePath *np = (const NodePath *) p_np;
+	String s = np->get_name(p_idx);
+	godot_string *str = (godot_string *) &s;
+	return *str;
+}
+
+godot_int GDAPI godot_node_path_get_name_count(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	return np->get_name_count();
+}
+
+godot_string GDAPI godot_node_path_get_property(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	String s = np->get_property();
+	godot_string *str = (godot_string *) &s;
+	return *str;
+}
+
+godot_string GDAPI godot_node_path_get_subname(const godot_node_path *p_np, const godot_int p_idx) {
+	const NodePath *np = (const NodePath *) p_np;
+	String s = np->get_subname(p_idx);
+	godot_string *str = (godot_string *) &s;
+	return *str;
+}
+
+godot_int GDAPI godot_node_path_get_subname_count(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	return np->get_subname_count();
 }
 
 
-void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, const int p_size) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	*p = String::utf8(p_contents, p_size);
+godot_bool GDAPI godot_node_path_is_absolute(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	return np->is_absolute();
 }
 
-
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
-	String *p = (String *) p_str;
-	if (p_size != NULL) {
-		*p_size = p->utf8().length();
-	}
-	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
-	}
-}
-
-void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_string *p_src) {
-	String *dest = (String *) p_dest;
-	String *src  = (String *) p_src;
-
-	*dest = *src;
-}
-
-
-
-godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a == *b;
-}
-
-godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a < *b;
-}
-
-void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b) {
-	String *dest = (String *) p_dest;
-	const String *a = (String *) p_a;
-	const String *b = (String *) p_b;
-
-	String tmp = *a + *b;
-	godot_string_new(p_dest);
-	*dest = tmp;
-}
-
-
-
-
-void GDAPI godot_string_destroy(godot_string *p_str) {
-	String *p = (String *) p_str;
-	p->~String();
+godot_bool GDAPI godot_node_path_is_empty(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	return np->is_empty();
 }
 
 
 
+godot_string GDAPI godot_node_path_as_string(const godot_node_path *p_np) {
+	const NodePath *np = (const NodePath *) p_np;
+	String s = *np;
+	godot_string *str = (godot_string *) &s;
+	return *str;
+}
+
+void GDAPI godot_node_path_destroy(godot_node_path *p_np) {
+	memdelete((NodePath *) p_np);
+}
 
 #ifdef __cplusplus
 }

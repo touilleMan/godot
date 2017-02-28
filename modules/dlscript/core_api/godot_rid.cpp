@@ -1,83 +1,39 @@
 #include "godot_string.h"
 
-#include "core/ustring.h"
-#include "core/string_db.h"
+#include "object.h"
+#include "resource.h"
 
-#include <memory.h> // why is there no <cmemory> btw?
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void _string_api_anchor() {
+void _rid_api_anchor() {
 
 }
 
 
-void GDAPI godot_string_new(godot_string *p_str) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	// *p = String(); // useless here
-}
+void GDAPI godot_rid_new(godot_rid *p_rid, godot_object *p_from) {
 
+	Resource *res_from = ((Object *) p_from)->cast_to<Resource>();
 
-void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, const int p_size) {
-	String *p = (String *) p_str;
-	memnew_placement(p, String);
-	*p = String::utf8(p_contents, p_size);
-}
+	RID *rid = (RID *) p_rid;
+	memnew_placement(rid, RID);
 
-
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
-	String *p = (String *) p_str;
-	if (p_size != NULL) {
-		*p_size = p->utf8().length();
+	if (res_from) {
+		*rid = RID(res_from->get_rid());
 	}
-	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
-	}
+
 }
 
-void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_string *p_src) {
-	String *dest = (String *) p_dest;
-	String *src  = (String *) p_src;
-
-	*dest = *src;
+uint32_t GDAPI godot_rid_get_rid(const godot_rid *p_rid) {
+	RID *rid = (RID *) p_rid;
+	return rid->get_id();
 }
 
-
-
-godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a == *b;
+void GDAPI godot_rid_destroy(godot_rid *p_rid) {
+	memdelete((RID *) p_rid);
 }
-
-godot_bool GDAPI godot_string_operator_less(const godot_string *p_a, const godot_string *p_b) {
-	String *a = (String *) p_a;
-	String *b = (String *) p_b;
-	return *a < *b;
-}
-
-void GDAPI godot_string_operator_plus(godot_string *p_dest, const godot_string *p_a, const godot_string *p_b) {
-	String *dest = (String *) p_dest;
-	const String *a = (String *) p_a;
-	const String *b = (String *) p_b;
-
-	String tmp = *a + *b;
-	godot_string_new(p_dest);
-	*dest = tmp;
-}
-
-
-
-
-void GDAPI godot_string_destroy(godot_string *p_str) {
-	String *p = (String *) p_str;
-	p->~String();
-}
-
-
 
 
 #ifdef __cplusplus
