@@ -277,6 +277,7 @@ godot_basis GDAPI godot_variant_as_basis(const godot_variant *p_v) {
 	godot_basis b;
 	Basis *bs = (Basis *) &b;
 	*bs = *v;
+	return b;
 }
 
 godot_transform GDAPI godot_variant_as_transform(const godot_variant *p_v) {
@@ -460,7 +461,8 @@ godot_bool GDAPI godot_variant_booleanize(const godot_variant *p_v, godot_bool *
 
 
 void GDAPI godot_variant_destroy(godot_variant *p_v) {
-	memdelete((Variant *) p_v);
+	((Variant *)p_v)->~Variant();
+
 }
 
 

@@ -206,6 +206,8 @@ typedef void godot_object;
 
 void GDAPI godot_object_destroy(godot_object **p_o);
 
+godot_object GDAPI *godot_dlinstance_get_owner(godot_object *p_instance);
+
 
 ////// Variant
 

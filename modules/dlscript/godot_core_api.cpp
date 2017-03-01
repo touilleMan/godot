@@ -103,6 +103,11 @@ void GDAPI godot_object_destroy(godot_object **p_o) {
 	memdelete(*(Object **) p_o);
 }
 
+godot_object GDAPI *godot_dlinstance_get_owner(godot_object *p_instance) {
+	DLInstance *instance = (DLInstance *) p_instance;
+	return (godot_object *) instance->get_owner();
+}
+
 
 
 // Class
@@ -229,7 +234,8 @@ godot_method_bind *GDAPI godot_method_bind_get_method(const char *p_classname, c
 void GDAPI godot_method_bind_ptrcall(godot_method_bind *p_method_bind, godot_object *p_instance, const void **p_args, void *p_ret) {
 
 	MethodBind *mb = (MethodBind*)p_method_bind;
-	mb->ptrcall((Object*)p_instance, p_args, p_ret);
+	Object *o = (Object *) p_instance;
+	mb->ptrcall(o, p_args, p_ret);
 }
 
 // @Todo

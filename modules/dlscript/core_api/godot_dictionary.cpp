@@ -96,7 +96,7 @@ godot_array GDAPI godot_dictionary_values(const godot_dictionary *p_dict) {
 }
 
 void GDAPI godot_dictionary_destroy(godot_dictionary *p_dict) {
-	memdelete((Dictionary *) p_dict);
+	((Dictionary *) p_dict)->~Dictionary();
 }
 
 

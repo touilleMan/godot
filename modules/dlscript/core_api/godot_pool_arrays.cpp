@@ -89,7 +89,7 @@ godot_int GDAPI godot_pool_byte_array_size(godot_pool_byte_array *p_pba) {
 }
 
 void GDAPI godot_pool_byte_array_destroy(godot_pool_byte_array *p_pba) {
-	memdelete((PoolVector<uint8_t> *) p_pba);
+	((PoolVector<uint8_t> *) p_pba)->~PoolVector();
 }
 
 
@@ -173,7 +173,7 @@ godot_int GDAPI godot_pool_int_array_size(godot_pool_int_array *p_pba) {
 }
 
 void GDAPI godot_pool_int_array_destroy(godot_pool_int_array *p_pba) {
-	memdelete((PoolVector<godot_int> *) p_pba);
+	((PoolVector<godot_int> *) p_pba)->~PoolVector();
 }
 
 
@@ -258,7 +258,7 @@ godot_int GDAPI godot_pool_real_array_size(godot_pool_real_array *p_pba) {
 }
 
 void GDAPI godot_pool_real_array_destroy(godot_pool_real_array *p_pba) {
-	memdelete((PoolVector<godot_real> *) p_pba);
+	((PoolVector<godot_real> *) p_pba)->~PoolVector();
 }
 
 
@@ -347,7 +347,7 @@ godot_int GDAPI godot_pool_string_array_size(godot_pool_string_array *p_pba) {
 }
 
 void GDAPI godot_pool_string_array_destroy(godot_pool_string_array *p_pba) {
-	memdelete((PoolVector<String> *) p_pba);
+	((PoolVector<String> *) p_pba)->~PoolVector();
 }
 
 
@@ -436,7 +436,7 @@ godot_int GDAPI godot_pool_vector2_array_size(godot_pool_vector2_array *p_pba) {
 }
 
 void GDAPI godot_pool_vector2_array_destroy(godot_pool_vector2_array *p_pba) {
-	memdelete((PoolVector<Vector2> *) p_pba);
+	((PoolVector<Vector2> *) p_pba)->~PoolVector();
 }
 
 
@@ -527,7 +527,7 @@ godot_int GDAPI godot_pool_vector3_array_size(godot_pool_vector3_array *p_pba) {
 }
 
 void GDAPI godot_pool_vector3_array_destroy(godot_pool_vector3_array *p_pba) {
-	memdelete((PoolVector<Vector3> *) p_pba);
+	((PoolVector<Vector3> *) p_pba)->~PoolVector();
 }
 
 
@@ -615,7 +615,7 @@ godot_int GDAPI godot_pool_color_array_size(godot_pool_color_array *p_pba) {
 }
 
 void GDAPI godot_pool_color_array_destroy(godot_pool_color_array *p_pba) {
-	memdelete((PoolVector<Color> *) p_pba);
+	((PoolVector<Color> *) p_pba)->~PoolVector();
 }
 
 

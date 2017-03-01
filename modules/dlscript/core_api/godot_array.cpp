@@ -270,7 +270,7 @@ void GDAPI godot_array_sort_custom(godot_array *p_arr, godot_object *p_obj, cons
 }
 
 void GDAPI godot_array_destroy(godot_array *p_arr) {
-	memdelete((Array *) p_arr);
+	((Array *) p_arr)->~Array();
 }
 
 

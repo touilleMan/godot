@@ -32,7 +32,7 @@ uint32_t GDAPI godot_rid_get_rid(const godot_rid *p_rid) {
 }
 
 void GDAPI godot_rid_destroy(godot_rid *p_rid) {
-	memdelete((RID *) p_rid);
+	((RID *) p_rid)->~RID();
 }
 
 

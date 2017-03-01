@@ -86,7 +86,7 @@ int GDAPI godot_image_get_mipmap_count(const godot_image *p_img) {
 
 
 void GDAPI godot_image_destroy(godot_image *p_img) {
-	memdelete((Image *) p_img);
+	((Image *) p_img)->~Image();
 }
 
 
