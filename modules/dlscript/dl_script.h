@@ -41,7 +41,7 @@
 struct DLScriptData {
 	typedef void* (InstanceFunc)(godot_object* instance);
 	typedef void (DestroyFunc)(godot_object* instance,void* userdata);
-	typedef godot_variant (MethodFunc)(godot_object* instance,void* userdata,godot_variant** args,int arg_count);
+	typedef godot_variant (MethodFunc)(godot_object* instance,void* userdata,int arg_count,godot_variant** args);
 	typedef void (SetterFunc)(godot_object* instance,void* userdata,godot_variant value);
 	typedef godot_variant (GetterFunc)(godot_object* instance,void* userdata);
 	

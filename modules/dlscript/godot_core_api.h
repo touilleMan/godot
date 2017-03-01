@@ -211,93 +211,6 @@ void GDAPI godot_object_destroy(godot_object **p_o);
 
 #include "core_api/godot_variant.h"
 
-////// InputEvent
-
-/*
-
-#define INPUT_EVENT_BUTTON_LEFT 1
-#define INPUT_EVENT_BUTTON_RIGHT 2
-#define INPUT_EVENT_BUTTON_MIDDLE 3
-#define INPUT_EVENT_BUTTON_WHEEL_UP 4
-#define INPUT_EVENT_BUTTON_WHEEL_DOWN 5
-#define INPUT_EVENT_BUTTON_WHEEL_LEFT 6
-#define INPUT_EVENT_BUTTON_WHEEL_RIGHT 7
-#define INPUT_EVENT_BUTTON_MASK_LEFT (1<<(INPUT_EVENT_BUTTON_LEFT-1))
-#define INPUT_EVENT_BUTTON_MASK_RIGHT (1<<(INPUT_EVENT_BUTTON_RIGHT-1))
-#define INPUT_EVENT_BUTTON_MASK_MIDDLE (1<<(INPUT_EVENT_BUTTON_MIDDLE-1))
-
-#define INPUT_EVENT_TYPE_NONE 0
-#define INPUT_EVENT_TYPE_KEY 1
-#define INPUT_EVENT_TYPE_MOUSE_MOTION 2
-#define INPUT_EVENT_TYPE_MOUSE_BUTTON 3
-#define INPUT_EVENT_TYPE_JOYPAD_MOTION 4
-#define INPUT_EVENT_TYPE_JOYPAD_BUTTON 5
-#define INPUT_EVENT_TYPE_SCREEN_TOUCH 6
-#define INPUT_EVENT_TYPE_SCREEN_DRAG 7
-#define INPUT_EVENT_TYPE_ACTION 8
-
-typedef void* godot_input_event;
-
-
-godot_input_event GDAPI godot_input_event_new();
-godot_input_event GDAPI godot_input_event_copy(godot_input_event p_input_event);
-void GDAPI godot_input_event_free(godot_input_event p_input_event);
-
-int GDAPI godot_input_event_get_type(godot_input_event p_event);
-int GDAPI godot_input_event_get_device(godot_input_event p_event);
-
-godot_bool GDAPI godot_input_event_mod_has_alt(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mod_has_ctrl(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mod_has_command(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mod_has_shift(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mod_has_meta(godot_input_event p_event);
-
-int GDAPI godot_input_event_key_get_scancode(godot_input_event p_event);
-int GDAPI godot_input_event_key_get_unicode(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_key_is_pressed(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_key_is_echo(godot_input_event p_event);
-
-int GDAPI godot_input_event_mouse_get_x(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_get_y(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_get_global_x(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_get_global_y(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_get_button_mask(godot_input_event p_event);
-
-int GDAPI godot_input_event_mouse_button_get_button_index(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mouse_button_is_pressed(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_mouse_button_is_doubleclick(godot_input_event p_event);
-
-int GDAPI godot_input_event_mouse_motion_get_relative_x(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_motion_get_relative_y(godot_input_event p_event);
-
-int GDAPI godot_input_event_mouse_motion_get_speed_x(godot_input_event p_event);
-int GDAPI godot_input_event_mouse_motion_get_speed_y(godot_input_event p_event);
-
-int GDAPI godot_input_event_joypad_motion_get_axis(godot_input_event p_event);
-float GDAPI godot_input_event_joypad_motion_get_axis_value(godot_input_event p_event);
-
-int GDAPI godot_input_event_joypad_button_get_button_index(godot_input_event p_event);
-godot_bool GDAPI godot_input_event_joypad_button_is_pressed(godot_input_event p_event);
-float GDAPI godot_input_event_joypad_button_get_pressure(godot_input_event p_event);
-
-
-int GDAPI godot_input_event_screen_touch_get_index(godot_input_event p_event);
-int GDAPI godot_input_event_screen_touch_get_x(godot_input_event p_event);
-int GDAPI godot_input_event_screen_touch_get_y(godot_input_event p_event);
-int GDAPI godot_input_event_screen_touch_is_pressed(godot_input_event p_event);
-
-int GDAPI godot_input_event_screen_drag_get_index(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_x(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_y(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_relative_x(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_relative_y(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_speed_x(godot_input_event p_event);
-int GDAPI godot_input_event_screen_drag_get_speed_y(godot_input_event p_event);
-
-int GDAPI godot_input_event_is_action(godot_input_event p_event,char *p_action);
-int GDAPI godot_input_event_is_action_pressed(godot_input_event p_event,char *p_action);
-
-*/
 
 
 ////// Class
@@ -369,10 +282,10 @@ typedef void (godot_script_destroy_func)(godot_object*,void*); //passed an insta
 void GDAPI godot_script_register(const char* p_name,const char* p_base,godot_script_instance_func p_instance_func,godot_script_destroy_func p_free_func);
 
 
-typedef GDAPI godot_variant (godot_script_func)(godot_object*,void*,godot_variant**,int); //instance,userdata,arguments,argument count. Return something or NULL. Arguments must not be freed.
+typedef GDAPI godot_variant (godot_script_func)(godot_object*,void*,int,godot_variant**); //instance,userdata,arguments,argument count. Return something or NULL. Arguments must not be freed.
 
 void GDAPI godot_script_add_method(const char* p_name,const char* p_function_name,godot_method_attributes *p_attr, godot_script_func p_func);
-void GDAPI godot_script_add_validated_method(const char* p_name,const char* p_function_name,godot_method_attributes *p_attr, godot_script_func p_func,int* p_arg_types,int p_arg_count,godot_variant** p_default_args,int p_default_arg_count);
+void GDAPI godot_script_add_validated_method(const char* p_name,const char* p_function_name,godot_method_attributes *p_attr, godot_script_func p_func,int p_arg_count,int* p_arg_types,int p_default_arg_count,godot_variant** p_default_args);
 
 
 typedef void (godot_set_property_func)(godot_object*,void*,godot_variant); //instance,userdata,value. Value must not be freed.
