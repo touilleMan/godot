@@ -129,37 +129,25 @@ typedef void godot_object;
 
 /////// String
 
-#ifndef GODOT_CORE_API_GODOT_STRING_TYPE_DEFINED
-typedef struct godot_string {
-	uint8_t _dont_touch_that[8];
-} godot_string;
-#endif
-
 #include "core_api/godot_string.h"
-
 
 ////// Vector2
 
-
-
 #include "core_api/godot_vector2.h"
+
+////// Rect2
+
+#include "core_api/godot_rect2.h"
 
 ////// Vector3
 
-
-
 #include "core_api/godot_vector3.h"
-
 
 ////// Transform2D
 
-
 #include "core_api/godot_transform2d.h"
 
-
 /////// Plane
-
-
 
 #include "core_api/godot_plane.h"
 
@@ -169,11 +157,9 @@ typedef struct godot_string {
 
 /////// Rect3
 
-
 #include "core_api/godot_rect3.h"
 
 /////// Basis
-
 
 #include "core_api/godot_basis.h"
 
@@ -203,13 +189,11 @@ typedef struct godot_string {
 
 /////// Dictionary
 
-
 #include "core_api/godot_dictionary.h"
 
 /////// Array
 
 #include "core_api/godot_array.h"
-
 
 
 // single API file for Pool*Array

@@ -50,6 +50,7 @@ extern "C" {
 
 extern "C" void _string_api_anchor();
 extern "C" void _vector2_api_anchor();
+extern "C" void _rect2_api_anchor();
 extern "C" void _vector3_api_anchor();
 extern "C" void _transform2d_api_anchor();
 extern "C" void _plane_api_anchor();
@@ -71,6 +72,7 @@ void _api_anchor() {
 
 	_string_api_anchor();
 	_vector2_api_anchor();
+	_rect2_api_anchor();
 	_vector3_api_anchor();
 	_transform2d_api_anchor();
 	_plane_api_anchor();

@@ -9,7 +9,9 @@ extern "C" {
 
 #include <stdint.h>
 
+
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+#define GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 typedef struct godot_transform2d {
 	uint8_t _dont_touch_that[24];
 } godot_transform2d;
