@@ -99,15 +99,9 @@ _FORCE_INLINE_ a memcast(b v) {
 }
 
 
-void GDAPI godot_object_destroy(godot_object **p_o) {
-	memdelete(*(Object **) p_o);
+void GDAPI godot_object_destroy(godot_object *p_o) {
+	memdelete((Object *) p_o);
 }
-
-godot_object GDAPI *godot_dlinstance_get_owner(godot_object *p_instance) {
-	DLInstance *instance = (DLInstance *) p_instance;
-	return (godot_object *) instance->get_owner();
-}
-
 
 
 // Class
@@ -182,7 +176,7 @@ godot_variant GDAPI godot_class_method_get_argument_default_value(char* p_class,
 	Variant v = method->get_default_argument(p_argument);
 
 	godot_variant variant; // = godot_variant_new();
-	//*static_cast<Variant*>(variant) = v;
+	// *static_cast<Variant*>(variant) = v;
 
 	return variant;
 }

@@ -542,7 +542,7 @@ Variant DLInstance::call(const StringName& p_method,const Variant** p_args,int p
 	while(data_ptr) {
 		Map<StringName,DLScriptData::Method>::Element *E = data_ptr->methods.find(p_method);
 		if (E) {
-			godot_variant result = E->get().func((godot_object*) this, userdata, p_argcount, (godot_variant**) p_args);
+			godot_variant result = E->get().func((godot_object*) owner, userdata, p_argcount, (godot_variant**) p_args);
 			return *(Variant*) &result;
 
 		}
@@ -559,7 +559,7 @@ void DLInstance::call_multilevel(const StringName& p_method,const Variant** p_ar
 	while(data_ptr) {
 		Map<StringName,DLScriptData::Method>::Element *E = data_ptr->methods.find(p_method);
 		if (E) {
-			E->get().func((godot_object*) this, userdata, p_argcount, (godot_variant**) p_args);
+			E->get().func((godot_object*) owner, userdata, p_argcount, (godot_variant**) p_args);
 		}
 		data_ptr = data_ptr->base_data;
 	}
@@ -575,7 +575,7 @@ void DLInstance::_ml_call_reversed(DLScriptData *data_ptr,const StringName& p_me
 
 	Map<StringName,DLScriptData::Method>::Element *E = data_ptr->methods.find(p_method);
 	if (E) {
-		E->get().func((godot_object*) this, userdata, p_argcount, (godot_variant**) p_args);
+		E->get().func((godot_object*) owner, userdata, p_argcount, (godot_variant**) p_args);
 	}
 
 }
@@ -646,7 +646,7 @@ DLInstance::~DLInstance() {
 		if (owner) {
 			script->instances.erase(owner);
 		}
-		script->script_data->destroy_func((godot_object*) this, userdata);
+		script->script_data->destroy_func((godot_object*) owner, userdata);
 	}
 }
 

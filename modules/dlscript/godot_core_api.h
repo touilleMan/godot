@@ -204,9 +204,8 @@ typedef void godot_object;
 
 
 
-void GDAPI godot_object_destroy(godot_object **p_o);
+void GDAPI godot_object_destroy(godot_object *p_o);
 
-godot_object GDAPI *godot_dlinstance_get_owner(godot_object *p_instance);
 
 
 ////// Variant
@@ -215,29 +214,7 @@ godot_object GDAPI *godot_dlinstance_get_owner(godot_object *p_instance);
 
 
 
-////// Class
-/*
-char GDAPI **godot_class_get_list(); //get list of classes in array to array of strings, must be freed, use godot_list_free()
 
-int GDAPI godot_class_get_base(char* p_class,char *p_base,int p_max_len);
-
-char GDAPI **godot_class_get_method_list(char* p_class); //free with godot_list_free()
-int GDAPI godot_class_method_get_argument_count(char* p_class,char *p_method);
-int GDAPI godot_class_method_get_argument_type(char* p_class,char *p_method,int p_argument);
-godot_variant GDAPI godot_class_method_get_argument_default_value(char* p_class,char *p_method,int p_argument);
-
-char GDAPI **godot_class_get_constant_list(char* p_class); //free with godot_list_free()
-int GDAPI godot_class_constant_get_value(char* p_class,char *p_constant);
-*/
-
-
-
-////// Object
-
-/*typedef struct godot_object {
-	uint8_t _dont_touch_that[136]; // will only be accessed by pointer, so it doesn't matter
-} godot_object;
-*/
 
 ////// Singleton API
 
