@@ -91,6 +91,12 @@ class DLScript : public Script {
 	Set<Object*> instances;
 	DLScriptData* script_data;
 
+#ifdef TOOLS_ENABLED
+	Set<PlaceHolderScriptInstance*> placeholders;
+	// void _update_placeholder(PlaceHolderScriptInstance *p_placeholder);
+	// virtual void _placeholder_erased(PlaceHolderScriptInstance *p_placeholder);
+#endif
+
 friend class DLInstance;
 friend class DLScriptLanguage;
 
@@ -155,7 +161,7 @@ class DLLibrary : public Resource {
 protected:
 friend class DLScript;
 
-	Error _initialize_handle();
+	Error _initialize_handle(bool p_in_editor = false);
 
 	_FORCE_INLINE_ DLScriptData* get_script_data(const StringName p_name) const {
 		ERR_FAIL_COND_V(!scripts.has(p_name), NULL);

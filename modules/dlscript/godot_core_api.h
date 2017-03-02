@@ -254,6 +254,18 @@ void GDAPI godot_method_bind_ptrcall(godot_method_bind *p_method_bind, godot_obj
 
 ////// Script API
 
+
+
+struct godot_dlscript_init_options {
+	godot_bool in_editor;
+	uint64_t core_api_hash;
+	uint64_t editor_api_hash;
+	uint64_t no_api_hash;
+};
+typedef struct godot_dlscript_init_options godot_dlscript_init_options;
+
+
+
 enum godot_method_rpc_mode {
 	GODOT_METHOD_RPC_MODE_DISABLED,
 	GODOT_METHOD_RPC_MODE_REMOTE,

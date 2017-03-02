@@ -67,30 +67,34 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 
 	#ifdef TOOLS_ENABLED
 
-		if (!ScriptServer::is_scripting_enabled()) {
+	if (!ScriptServer::is_scripting_enabled()) {
+		print_line("DLScript: Running in editor!");
 
 
+	/*
 		PlaceHolderScriptInstance *sins = memnew( PlaceHolderScriptInstance(DLScriptLanguage::singleton,Ref<Script>((Script*)this),p_this));
-		// placeholders.insert(sins);
-		// 
-		// List<PropertyInfo> pinfo;
-		// Map<StringName,Variant> values;
-		// 
-		// for (Map<StringName,Variable>::Element *E=variables.front();E;E=E->next()) {
-		// 
-		// 	if (!E->get()._export)
-		// 		continue;
-		// 
-		// 	PropertyInfo p = E->get().info;
-		// 	p.name=String(E->key());
-		// 	pinfo.push_back(p);
-		// 	values[p.name]=E->get().default_value;
-		// }
-		// 
-		// sins->update(pinfo,values);
+		placeholders.insert(sins);
+
+		List<PropertyInfo> pinfo;
+		Map<StringName,Variant> values;
+
+		for (Map<StringName,Variable>::Element *E=variables.front();E;E=E->next()) {
+
+			if (!E->get()._export)
+				continue;
+
+			PropertyInfo p = E->get().info;
+			p.name=String(E->key());
+			pinfo.push_back(p);
+			values[p.name]=E->get().default_value;
+		}
+
+		sins->update(pinfo,values);
 
 		return sins;
+	*/
 	}
+
 	#endif
 	
 	DLInstance* new_instance = memnew( DLInstance );
@@ -270,7 +274,7 @@ String DLLibrary::get_platform_file(StringName p_platform) const {
 	}
 }
 
-Error DLLibrary::_initialize_handle() {
+Error DLLibrary::_initialize_handle(bool p_in_editor) {
 	_THREAD_SAFE_METHOD_
 	
 	if (library_handle)
@@ -323,8 +327,17 @@ Error DLLibrary::_initialize_handle() {
 	
 	DLLibrary::currently_initialized_library = this;
 	
-	void (*library_init_fpointer)() = (void(*)()) library_init;
-	library_init_fpointer(); // Catch errors?
+	void (*library_init_fpointer)(godot_dlscript_init_options*) = (void(*)(godot_dlscript_init_options*)) library_init;
+
+	godot_dlscript_init_options options;
+
+	options.in_editor       = p_in_editor;
+	options.core_api_hash   = ClassDB::get_api_hash(ClassDB::API_CORE);
+	options.editor_api_hash = ClassDB::get_api_hash(ClassDB::API_EDITOR);
+	options.no_api_hash     = ClassDB::get_api_hash(ClassDB::API_NONE);
+
+
+	library_init_fpointer(&options); // Catch errors?
 	/*{
 		ERR_EXPLAIN("Couldn't initialize library");
 		ERR_FAIL_V(ERR_SCRIPT_FAILED);
