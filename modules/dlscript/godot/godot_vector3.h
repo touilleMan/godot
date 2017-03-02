@@ -13,7 +13,7 @@ typedef struct godot_vector3 {
 } godot_vector3;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_vector3_new(godot_vector3 *p_v, const godot_real p_x, const godot_real p_y, const godot_real p_z);
 

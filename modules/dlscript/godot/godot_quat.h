@@ -13,7 +13,7 @@ typedef struct godot_quat {
 } godot_quat;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_quat_new(godot_quat *p_quat);
 void GDAPI godot_quat_new_with_elements(godot_quat *p_quat, const godot_real x, const godot_real y, const godot_real z, const godot_real w);

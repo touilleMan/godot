@@ -14,7 +14,7 @@ typedef struct godot_vector2 {
 } godot_vector2;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_vector2_new(godot_vector2 *p_v, const godot_real p_x, const godot_real p_y);
 

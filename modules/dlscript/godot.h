@@ -129,75 +129,75 @@ typedef void godot_object;
 
 /////// String
 
-#include "core_api/godot_string.h"
+#include "godot/godot_string.h"
 
 ////// Vector2
 
-#include "core_api/godot_vector2.h"
+#include "godot/godot_vector2.h"
 
 ////// Rect2
 
-#include "core_api/godot_rect2.h"
+#include "godot/godot_rect2.h"
 
 ////// Vector3
 
-#include "core_api/godot_vector3.h"
+#include "godot/godot_vector3.h"
 
 ////// Transform2D
 
-#include "core_api/godot_transform2d.h"
+#include "godot/godot_transform2d.h"
 
 /////// Plane
 
-#include "core_api/godot_plane.h"
+#include "godot/godot_plane.h"
 
 /////// Quat
 
-#include "core_api/godot_quat.h"
+#include "godot/godot_quat.h"
 
 /////// Rect3
 
-#include "core_api/godot_rect3.h"
+#include "godot/godot_rect3.h"
 
 /////// Basis
 
-#include "core_api/godot_basis.h"
+#include "godot/godot_basis.h"
 
 /////// Transform
 
-#include "core_api/godot_transform.h"
+#include "godot/godot_transform.h"
 
 /////// Color
 
-#include "core_api/godot_color.h"
+#include "godot/godot_color.h"
 
 /////// Image
 
-#include "core_api/godot_image.h"
+#include "godot/godot_image.h"
 
 /////// NodePath
 
-#include "core_api/godot_node_path.h"
+#include "godot/godot_node_path.h"
 
 /////// RID
 
-#include "core_api/godot_rid.h"
+#include "godot/godot_rid.h"
 
 /////// InputEvent
 
-#include "core_api/godot_input_event.h"
+#include "godot/godot_input_event.h"
 
 /////// Dictionary
 
-#include "core_api/godot_dictionary.h"
+#include "godot/godot_dictionary.h"
 
 /////// Array
 
-#include "core_api/godot_array.h"
+#include "godot/godot_array.h"
 
 
 // single API file for Pool*Array
-#include "core_api/godot_pool_arrays.h"
+#include "godot/godot_pool_arrays.h"
 
 
 
@@ -210,7 +210,7 @@ void GDAPI godot_object_destroy(godot_object *p_o);
 
 ////// Variant
 
-#include "core_api/godot_variant.h"
+#include "godot/godot_variant.h"
 
 
 

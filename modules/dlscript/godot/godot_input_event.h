@@ -142,7 +142,7 @@ enum {
 
 
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_input_event_new(godot_input_event *p_ie);
 

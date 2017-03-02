@@ -13,7 +13,7 @@ typedef struct godot_rid {
 } godot_rid;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_rid_new(godot_rid *p_rid, godot_object *p_from);
 

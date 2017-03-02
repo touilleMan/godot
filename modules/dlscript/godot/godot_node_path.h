@@ -13,7 +13,7 @@ typedef struct godot_node_path {
 } godot_node_path;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_node_path_new(godot_node_path *p_np, const godot_string *p_from);
 

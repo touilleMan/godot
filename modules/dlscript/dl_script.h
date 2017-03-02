@@ -36,7 +36,7 @@
 #include "os/thread_safe.h"
 
 
-#include "godot_core_api.h"
+#include "godot.h"
 
 struct DLScriptData {
 	typedef void* (InstanceFunc)(godot_object* instance);

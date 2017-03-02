@@ -13,7 +13,7 @@ typedef struct godot_array {
 } godot_array;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 #include "godot_pool_arrays.h"
 #include "godot_variant.h"

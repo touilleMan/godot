@@ -14,7 +14,7 @@ typedef struct godot_rect2 {
 #endif
 
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_rect2_new(godot_rect2 *p_rect);
 void GDAPI godot_rect2_new_with_pos_and_size(godot_rect2 *p_rect, const godot_vector2 *p_pos, const godot_vector2 *p_size);

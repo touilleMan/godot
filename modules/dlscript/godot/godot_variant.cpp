@@ -1,6 +1,6 @@
 #include "godot_variant.h"
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 #include "variant.h"
 

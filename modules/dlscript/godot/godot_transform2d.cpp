@@ -1,6 +1,6 @@
 #include "godot_transform2d.h"
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 #include "math/math_2d.h"
 

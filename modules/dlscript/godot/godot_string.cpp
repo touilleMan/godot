@@ -28,13 +28,13 @@ void GDAPI godot_string_new_data(godot_string *p_str, const char *p_contents, co
 }
 
 
-void GDAPI godot_string_get_data(const godot_string *p_str, char *p_dest, int *p_size) {
+void GDAPI godot_string_get_data(const godot_string *p_str, wchar_t *p_dest, int *p_size) {
 	String *p = (String *) p_str;
 	if (p_size != NULL) {
-		*p_size = p->utf8().length();
+		*p_size = p->length();
 	}
 	if (p_dest != NULL) {
-		memcpy(p_dest, p->utf8().get_data(), *p_size);
+		memcpy(p_dest, p->ptr(), *p_size * sizeof(CharType));
 	}
 }
 
@@ -45,6 +45,16 @@ void GDAPI godot_string_copy_string(const godot_string *p_dest, const godot_stri
 	*dest = *src;
 }
 
+
+wchar_t GDAPI *godot_string_operator_index(godot_string *p_str, const godot_int p_idx) {
+	String *s = (String *) p_str;
+	return &(s->operator [](p_idx));
+}
+
+const wchar_t GDAPI *godot_string_c_str(const godot_string *p_str) {
+	const String *s = (const String *) p_str;
+	return s->c_str();
+}
 
 
 godot_bool GDAPI godot_string_operator_equal(const godot_string *p_a, const godot_string *p_b) {

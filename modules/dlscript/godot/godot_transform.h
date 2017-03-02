@@ -14,7 +14,7 @@ typedef struct godot_transform {
 #endif
 
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_transform_new(godot_transform *p_trans);
 void GDAPI godot_transform_new_with_basis(godot_transform *p_trans, const godot_basis *p_basis);

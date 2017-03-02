@@ -16,7 +16,7 @@ typedef struct godot_image {
 
 #include "godot_pool_arrays.h"
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 // This is a copypasta of the C++ enum inside the Image class
 // There's no neat way of automatically updating the C enum / using the C++ enum directly

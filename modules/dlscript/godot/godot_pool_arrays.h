@@ -63,7 +63,7 @@ typedef struct godot_pool_color_array {
 } godot_pool_color_array;
 #endif
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 #include "godot_array.h"
 

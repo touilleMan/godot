@@ -1,8 +1,6 @@
 #ifndef GODOT_TRANSFORM2D_H
 #define GODOT_TRANSFORM2D_H
 
-#include "../godot_core_api.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -16,6 +14,8 @@ typedef struct godot_transform2d {
 	uint8_t _dont_touch_that[24];
 } godot_transform2d;
 #endif
+
+#include "../godot.h"
 
 #include "godot_vector2.h"
 

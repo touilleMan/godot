@@ -68,20 +68,24 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 	#ifdef TOOLS_ENABLED
 
 	if (!ScriptServer::is_scripting_enabled()) {
-		print_line("DLScript: Running in editor!");
 
 
-	/*
 		PlaceHolderScriptInstance *sins = memnew( PlaceHolderScriptInstance(DLScriptLanguage::singleton,Ref<Script>((Script*)this),p_this));
 		placeholders.insert(sins);
+
 
 		List<PropertyInfo> pinfo;
 		Map<StringName,Variant> values;
 
-		for (Map<StringName,Variable>::Element *E=variables.front();E;E=E->next()) {
+		if (!library->library_handle)
+			library->_initialize_handle(true);
 
-			if (!E->get()._export)
-				continue;
+		if (!script_data) {
+			script_data = library->get_script_data(script_name);
+		}
+		script_data->instance_func((godot_object*) sins);
+
+		for (Map<StringName,DLScriptData::Property>::Element *E= script_data->properties.front();E;E=E->next()) {
 
 			PropertyInfo p = E->get().info;
 			p.name=String(E->key());
@@ -92,7 +96,6 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 		sins->update(pinfo,values);
 
 		return sins;
-	*/
 	}
 
 	#endif

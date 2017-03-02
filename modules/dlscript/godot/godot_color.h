@@ -14,7 +14,7 @@ typedef struct godot_color {
 #endif
 
 
-#include "../godot_core_api.h"
+#include "../godot.h"
 
 void GDAPI godot_color_new(godot_color *p_color);
 void GDAPI godot_color_new_rgba(godot_color *p_color, const godot_real r, const godot_real g, const godot_real b, const godot_real a);
