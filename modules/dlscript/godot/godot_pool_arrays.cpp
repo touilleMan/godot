@@ -36,7 +36,7 @@ void GDAPI godot_pool_byte_array_new_with_array(godot_pool_byte_array *p_pba, co
 
 
 
-void GDAPI godot_pool_byte_array_apend(godot_pool_byte_array *p_pba, const uint8_t p_data) {
+void GDAPI godot_pool_byte_array_append(godot_pool_byte_array *p_pba, const uint8_t p_data) {
 	PoolVector<uint8_t> *pba = (PoolVector<uint8_t> *) p_pba;
 	pba->append(p_data);
 }
@@ -120,7 +120,7 @@ void GDAPI godot_pool_int_array_new_with_array(godot_pool_int_array *p_pba, cons
 
 
 
-void GDAPI godot_pool_int_array_apend(godot_pool_int_array *p_pba, const godot_int p_data) {
+void GDAPI godot_pool_int_array_append(godot_pool_int_array *p_pba, const godot_int p_data) {
 	PoolVector<godot_int> *pba = (PoolVector<godot_int> *) p_pba;
 	pba->append(p_data);
 }
@@ -206,7 +206,7 @@ void GDAPI godot_pool_real_array_new_with_array(godot_pool_real_array *p_pba, co
 
 }
 
-void GDAPI godot_pool_real_array_apend(godot_pool_real_array *p_pba, const godot_real p_data) {
+void GDAPI godot_pool_real_array_append(godot_pool_real_array *p_pba, const godot_real p_data) {
 	PoolVector<godot_real> *pba = (PoolVector<godot_real> *) p_pba;
 	pba->append(p_data);
 }
@@ -287,7 +287,7 @@ void GDAPI godot_pool_string_array_new_with_array(godot_pool_string_array *p_pba
 
 
 
-void GDAPI godot_pool_string_array_apend(godot_pool_string_array *p_pba, const godot_string *p_data) {
+void GDAPI godot_pool_string_array_append(godot_pool_string_array *p_pba, const godot_string *p_data) {
 	PoolVector<String> *pba = (PoolVector<String> *) p_pba;
 	String &s = *(String *) p_data;
 	pba->append(s);
@@ -377,7 +377,7 @@ void GDAPI godot_pool_vector2_array_new_with_array(godot_pool_vector2_array *p_p
 
 
 
-void GDAPI godot_pool_vector2_array_apend(godot_pool_vector2_array *p_pba, const godot_vector2 *p_data) {
+void GDAPI godot_pool_vector2_array_append(godot_pool_vector2_array *p_pba, const godot_vector2 *p_data) {
 	PoolVector<Vector2> *pba = (PoolVector<Vector2> *) p_pba;
 	Vector2 &s = *(Vector2 *) p_data;
 	pba->append(s);
@@ -468,7 +468,7 @@ void GDAPI godot_pool_vector3_array_new_with_array(godot_pool_vector3_array *p_p
 
 
 
-void GDAPI godot_pool_vector3_array_apend(godot_pool_vector3_array *p_pba, const godot_vector3 *p_data) {
+void GDAPI godot_pool_vector3_array_append(godot_pool_vector3_array *p_pba, const godot_vector3 *p_data) {
 	PoolVector<Vector3> *pba = (PoolVector<Vector3> *) p_pba;
 	Vector3 &s = *(Vector3 *) p_data;
 	pba->append(s);
@@ -556,7 +556,7 @@ void GDAPI godot_pool_color_array_new_with_array(godot_pool_color_array *p_pba, 
 
 
 
-void GDAPI godot_pool_color_array_apend(godot_pool_color_array *p_pba, const godot_color *p_data) {
+void GDAPI godot_pool_color_array_append(godot_pool_color_array *p_pba, const godot_color *p_data) {
 	PoolVector<Color> *pba = (PoolVector<Color> *) p_pba;
 	Color &s = *(Color *) p_data;
 	pba->append(s);
