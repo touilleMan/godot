@@ -29,7 +29,7 @@ void GDAPI godot_array_new_pool_byte_array(godot_array *p_arr, const godot_pool_
 
 void GDAPI godot_array_set(godot_array *p_arr, const godot_int p_idx, const godot_variant *p_value);
 
-godot_variant GDAPI godot_array_get(godot_array *p_arr, const godot_int p_idx);
+godot_variant GDAPI *godot_array_get(godot_array *p_arr, const godot_int p_idx);
 
 void GDAPI godot_array_append(godot_array *p_arr, const godot_variant *p_value);
 
@@ -41,27 +41,27 @@ godot_bool GDAPI godot_array_empty(const godot_array *p_arr);
 
 void GDAPI godot_array_erase(godot_array *p_arr, const godot_variant *p_value);
 
-godot_variant GDAPI godot_array_front(godot_array *p_arr);
+godot_variant GDAPI godot_array_front(const godot_array *p_arr);
 
-godot_variant GDAPI godot_array_back(godot_array *p_arr);
+godot_variant GDAPI godot_array_back(const godot_array *p_arr);
 
-godot_int GDAPI godot_array_find(godot_array *p_arr, const godot_variant *p_what, const godot_int p_from);
+godot_int GDAPI godot_array_find(const godot_array *p_arr, const godot_variant *p_what, const godot_int p_from);
 
-godot_int GDAPI godot_array_find_last(godot_array *p_arr, const godot_variant *p_what);
+godot_int GDAPI godot_array_find_last(const godot_array *p_arr, const godot_variant *p_what);
 
-godot_bool GDAPI godot_array_has(godot_array *p_arr,const  godot_variant *p_value);
+godot_bool GDAPI godot_array_has(const godot_array *p_arr,const  godot_variant *p_value);
 
-uint32_t GDAPI godot_array_hash(godot_array *p_arr);
+uint32_t GDAPI godot_array_hash(const godot_array *p_arr);
 
 void GDAPI godot_array_insert(godot_array *p_arr, const godot_int p_pos, const godot_variant *p_value);
 
 void GDAPI godot_array_invert(godot_array *p_arr);
 
-godot_bool GDAPI godot_array_is_shared(godot_array *p_arr);
+godot_bool GDAPI godot_array_is_shared(const godot_array *p_arr);
 
 godot_variant GDAPI godot_array_pop_back(godot_array *p_arr);
 
-godot_variant GDAPI godot_array_pop_fron(godot_array *p_arr);
+godot_variant GDAPI godot_array_pop_front(godot_array *p_arr);
 
 void GDAPI godot_array_push_back(godot_array *p_arr, const godot_variant *p_value);
 
@@ -71,9 +71,9 @@ void GDAPI godot_array_remove(godot_array *p_arr, const godot_int p_idx);
 
 void GDAPI godot_array_resize(godot_array *p_arr, const godot_int p_size);
 
-godot_int GDAPI godot_array_rfind(godot_array *p_arr, const godot_variant *p_what, const godot_int p_from);
+godot_int GDAPI godot_array_rfind(const godot_array *p_arr, const godot_variant *p_what, const godot_int p_from);
 
-godot_int GDAPI godot_array_size(godot_array *p_arr);
+godot_int GDAPI godot_array_size(const godot_array *p_arr);
 
 void GDAPI godot_array_sort(godot_array *p_arr);
 

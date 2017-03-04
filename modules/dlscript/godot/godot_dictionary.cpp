@@ -72,6 +72,13 @@ godot_int GDAPI godot_dictionary_parse_json(godot_dictionary *p_dict, const godo
 	return err;
 }
 
+godot_variant GDAPI *godot_dictionary_operator_index(godot_dictionary *p_dict, const godot_variant *p_key)
+{
+	Dictionary *dict = (Dictionary *) p_dict;
+	Variant *key = (Variant *) p_key;
+	return (godot_variant *) &dict->operator [](*key);
+}
+
 godot_int GDAPI godot_dictionary_size(const godot_dictionary *p_dict) {
 	const Dictionary *dict = (const Dictionary *) p_dict;
 	return dict->size();
@@ -87,12 +94,12 @@ godot_string GDAPI godot_dictionary_to_json(const godot_dictionary *p_dict) {
 }
 
 godot_array GDAPI godot_dictionary_values(const godot_dictionary *p_dict) {
+	godot_array a;
+	godot_array_new(&a);
 	const Dictionary *dict = (const Dictionary *) p_dict;
-	godot_array arr;
-	godot_array_new(&arr);
-	Array *a = (Array *) &a;
-	*a = dict->values();
-	return arr;
+	Array *array = (Array *) &a;
+	*array = dict->values();
+	return a;
 }
 
 void GDAPI godot_dictionary_destroy(godot_dictionary *p_dict) {

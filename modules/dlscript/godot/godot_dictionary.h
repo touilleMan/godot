@@ -35,6 +35,8 @@ godot_array GDAPI godot_dictionary_keys(const godot_dictionary *p_dict);
 
 godot_int GDAPI godot_dictionary_parse_json(godot_dictionary *p_dict, const godot_string *p_json);
 
+godot_variant GDAPI *godot_dictionary_operator_index(godot_dictionary *p_dict, const godot_variant *p_key);
+
 godot_int GDAPI godot_dictionary_size(const godot_dictionary *p_dict);
 
 godot_string GDAPI godot_dictionary_to_json(const godot_dictionary *p_dict);

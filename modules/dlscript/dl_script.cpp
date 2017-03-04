@@ -664,38 +664,8 @@ String DLScriptLanguage::get_name() const {
 	return "DLScript";
 }
 
-#define PRINT_SIZE(x) print_line("sizeof(" #x ") = " + String::num_int64(sizeof(x)))
-
 void DLScriptLanguage::init() {
 	// TODO: Expose globals
-
-	PRINT_SIZE(Variant);
-	PRINT_SIZE(String);
-	PRINT_SIZE(StringName);
-	PRINT_SIZE(Vector2);
-	PRINT_SIZE(Vector3);
-	PRINT_SIZE(Transform2D);
-	PRINT_SIZE(Plane);
-	PRINT_SIZE(Quat);
-	PRINT_SIZE(Rect3);
-	PRINT_SIZE(Basis);
-	PRINT_SIZE(Transform);
-	PRINT_SIZE(Color);
-	PRINT_SIZE(Image);
-	PRINT_SIZE(NodePath);
-	PRINT_SIZE(RID);
-	PRINT_SIZE(Object);
-	PRINT_SIZE(InputEvent);
-	PRINT_SIZE(Dictionary);
-	PRINT_SIZE(Array);
-	PRINT_SIZE(PoolByteArray);
-	PRINT_SIZE(PoolIntArray);
-	PRINT_SIZE(PoolRealArray);
-	PRINT_SIZE(PoolStringArray);
-	PRINT_SIZE(PoolVector2Array);
-	PRINT_SIZE(PoolVector3Array);
-	PRINT_SIZE(PoolColorArray);
-
 
 	// generate bindings
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)

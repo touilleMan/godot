@@ -20,6 +20,12 @@ godot_variant_type GDAPI godot_variant_get_type(const godot_variant *p_v) {
 	return (godot_variant_type) v->get_type();
 }
 
+void GDAPI godot_variant_copy(godot_variant *p_dest, const godot_variant *p_src) {
+	Variant *dest = (Variant *) p_dest;
+	Variant *src  = (Variant *) p_src;
+	*dest = *src;
+}
+
 void GDAPI godot_variant_new_nil(godot_variant *p_v) {
 	Variant *v = (Variant *) p_v;
 	memnew_placement(v, Variant);
@@ -30,12 +36,12 @@ void GDAPI godot_variant_new_bool(godot_variant *p_v, const godot_bool p_b) {
 	memnew_placement_custom(v, Variant, Variant(p_b));
 }
 
-void GDAPI godot_variant_new_int(godot_variant *p_v, const godot_int p_i) {
+void GDAPI godot_variant_new_int(godot_variant *p_v, const uint64_t p_i) {
 	Variant *v = (Variant *) p_v;
 	memnew_placement_custom(v, Variant, Variant(p_i));
 }
 
-void GDAPI godot_variant_new_real(godot_variant *p_v, const godot_real p_r) {
+void GDAPI godot_variant_new_real(godot_variant *p_v, const double p_r) {
 	Variant *v = (Variant *) p_v;
 	memnew_placement_custom(v, Variant, Variant(p_r));
 }
@@ -197,7 +203,7 @@ godot_bool GDAPI godot_variant_as_bool(const godot_variant *p_v) {
 	return v->operator bool();
 }
 
-godot_int GDAPI godot_variant_as_int(const godot_variant *p_v) {
+uint64_t GDAPI godot_variant_as_int(const godot_variant *p_v) {
 	const Variant *v = (const Variant *) p_v;
 	return v->operator godot_int();
 }
@@ -212,7 +218,7 @@ godot_string GDAPI godot_variant_as_string(const godot_variant *p_v) {
 	godot_string s;
 	godot_string_new(&s);
 	String *str = (String *) &s;
-	*str = *v;
+	*str = v->operator String();
 	return s;
 }
 
