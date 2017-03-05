@@ -104,7 +104,7 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 	
 	new_instance->owner = p_this;
 	new_instance->script = Ref<DLScript>(this);
-	new_instance->userdata = script_data->instance_func((godot_object*) new_instance);
+	new_instance->userdata = script_data->instance_func((godot_object*) p_this);
 	
 	instances.insert(p_this);
 	return new_instance;
