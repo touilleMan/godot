@@ -34,6 +34,8 @@
 #include "io/file_access_encrypted.h"
 #include "os/os.h"
 
+#include "scene/resources/scene_format_text.h"
+
 #ifdef TOOLS_ENABLED
 // #include "editor/editor_import_export.h"
 #endif
@@ -48,7 +50,8 @@
 // Script
 
 bool DLScript::can_instance() const {
-	return true; // yolo. Be careful though.
+	return script_data;
+	// change to true enable in editor stuff.
 }
 
 Ref<Script> DLScript::get_base_script() const {
@@ -67,6 +70,8 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 
 	#ifdef TOOLS_ENABLED
 
+	// find a good way to initialize stuff in the editor
+	/*
 	if (!ScriptServer::is_scripting_enabled()) {
 
 
@@ -77,26 +82,33 @@ ScriptInstance* DLScript::instance_create(Object *p_this) {
 		List<PropertyInfo> pinfo;
 		Map<StringName,Variant> values;
 
+		if (!library.is_valid())
+			return sins;
+
 		if (!library->library_handle)
 			library->_initialize_handle(true);
 
 		if (!script_data) {
 			script_data = library->get_script_data(script_name);
 		}
-		script_data->instance_func((godot_object*) sins);
+		if (script_data)
+			script_data->instance_func((godot_object*) sins);
 
-		for (Map<StringName,DLScriptData::Property>::Element *E= script_data->properties.front();E;E=E->next()) {
+		if (script_data) {
+			for (Map<StringName,DLScriptData::Property>::Element *E= script_data->properties.front();E;E=E->next()) {
 
-			PropertyInfo p = E->get().info;
-			p.name=String(E->key());
-			pinfo.push_back(p);
-			values[p.name]=E->get().default_value;
+				PropertyInfo p = E->get().info;
+				p.name=String(E->key());
+				pinfo.push_back(p);
+				values[p.name]=E->get().default_value;
+			}
 		}
 
 		sins->update(pinfo,values);
 
 		return sins;
 	}
+	*/
 
 	#endif
 	
@@ -191,7 +203,10 @@ void DLScript::set_library(Ref<DLLibrary> p_library) {
 		return;
 	#endif
 	if(library.is_valid()) {
-		ERR_FAIL_COND(library->_initialize_handle() != OK);
+		Error initalize_status = OK;
+		if (!library->library_handle)
+			initalize_status = library->_initialize_handle();
+		ERR_FAIL_COND(initalize_status != OK);
 		if(script_name) {
 			script_data = library->get_script_data(script_name);
 			ERR_FAIL_COND(!script_data);
@@ -817,3 +832,57 @@ DLScriptLanguage::DLScriptLanguage() {
 DLScriptLanguage::~DLScriptLanguage() {
 	singleton = NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+RES ResourceFormatLoaderDLScript::load(const String &p_path,const String& p_original_path,Error *r_error) {
+	ResourceFormatLoaderText rsflt;
+	return rsflt.load(p_path, p_original_path, r_error);
+}
+
+void ResourceFormatLoaderDLScript::get_recognized_extensions(List<String> *p_extensions) const {
+	p_extensions->push_back("dl");
+}
+bool ResourceFormatLoaderDLScript::handles_type(const String& p_type) const {
+	return p_type == "dl";
+}
+String ResourceFormatLoaderDLScript::get_resource_type(const String &p_path) const {
+	String el = p_path.get_extension().to_lower();
+	if (el=="dl")
+		return "DLScript";
+	return "";
+}
+
+
+
+
+
+Error ResourceFormatSaverDLScript::save(const String &p_path,const RES& p_resource,uint32_t p_flags) {
+	ResourceFormatSaverText rfst;
+	return rfst.save(p_path, p_resource, p_flags);
+}
+
+bool ResourceFormatSaverDLScript::recognize(const RES& p_resource) const {
+	return p_resource->cast_to<DLScript>()!=NULL;
+}
+
+void ResourceFormatSaverDLScript::get_recognized_extensions(const RES& p_resource,List<String> *p_extensions) const {
+	if (p_resource->cast_to<DLScript>()) {
+		p_extensions->push_back("gd");
+	}
+}
+
+
+
+
+
+
+

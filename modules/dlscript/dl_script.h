@@ -31,6 +31,7 @@
 
 #include "script_language.h"
 #include "io/resource_loader.h"
+#include "io/resource_saver.h"
 #include "self_list.h"
 #include "resource.h"
 #include "os/thread_safe.h"
@@ -84,6 +85,7 @@ class DLLibrary;
 class DLScript : public Script {
 
 	GDCLASS(DLScript,Script);
+	RES_BASE_EXTENSION("dl");
 
 	Ref<DLLibrary> library;
 	StringName script_name;
@@ -152,6 +154,7 @@ class DLLibrary : public Resource {
 
 	GDCLASS( DLLibrary, Resource );
 	OBJ_SAVE_TYPE( DLLibrary );
+	RES_BASE_EXTENSION("dllib");
 
 	Map<StringName,String> platform_files;
 	void* library_handle;
@@ -352,6 +355,13 @@ public:
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
 	virtual bool handles_type(const String& p_type) const;
 	virtual String get_resource_type(const String &p_path) const;
+
+};
+
+class ResourceFormatSaverDLScript : public ResourceFormatSaver {
+	virtual Error save(const String &p_path,const RES& p_resource,uint32_t p_flags=0);
+	virtual bool recognize(const RES& p_resource) const;
+	virtual void get_recognized_extensions(const RES& p_resource,List<String> *p_extensions) const;
 
 };
 
