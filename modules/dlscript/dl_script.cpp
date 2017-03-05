@@ -48,7 +48,7 @@
 // Script
 
 bool DLScript::can_instance() const {
-	return script_data;
+	return true; // yolo. Be careful though.
 }
 
 Ref<Script> DLScript::get_base_script() const {
