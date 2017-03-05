@@ -37,6 +37,12 @@ struct MethodAPI {
 
 	int argument_count;
 	bool has_varargs;
+	bool is_editor;
+	bool is_noscript;
+	bool is_const;
+	bool is_reverse;
+	bool is_virtual;
+	bool is_from_script;
 };
 
 
@@ -231,6 +237,18 @@ List<ClassAPI> generate_c_api_classes() {
 				method_api.argument_count = method_info.arguments.size();
 				method_api.has_varargs = method_bind && method_bind->is_vararg();
 
+				// Method flags
+				if (method_bind && method_bind->get_hint_flags()) {
+					const uint32_t flags = method_bind->get_hint_flags();
+					method_api.is_editor = flags & METHOD_FLAG_EDITOR;
+					method_api.is_noscript = flags & METHOD_FLAG_NOSCRIPT;
+					method_api.is_const = flags & METHOD_FLAG_CONST;
+					method_api.is_reverse = flags & METHOD_FLAG_REVERSE;
+					method_api.is_virtual = flags & METHOD_FLAG_VIRTUAL;
+					method_api.is_from_script = flags & METHOD_FLAG_FROM_SCRIPT;
+				}
+
+
 				// method argument name and type
 
 				for (int i = 0; i < method_api.argument_count; i++) {
@@ -332,6 +350,12 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 			source.push_back("\t\t\t{\n");
 			source.push_back("\t\t\t\t\"name\": \"" + e->get().method_name + "\",\n");
 			source.push_back("\t\t\t\t\"return_type\": \"" + e->get().return_type + "\",\n");
+			source.push_back(String("\t\t\t\t\"is_editor\": ") + (e->get().is_editor ? "true" : "false") + ",\n");
+			source.push_back(String("\t\t\t\t\"is_noscript\": ") + (e->get().is_noscript ? "true" : "false") + ",\n");
+			source.push_back(String("\t\t\t\t\"is_const\": ") + (e->get().is_const ? "true" : "false") + ",\n");
+			source.push_back(String("\t\t\t\t\"is_reverse\": ") + (e->get().is_reverse ? "true" : "false") + ",\n");
+			source.push_back(String("\t\t\t\t\"is_virtual\": ") + (e->get().is_virtual ? "true" : "false") + ",\n");
+			source.push_back(String("\t\t\t\t\"is_from_script\": ") + (e->get().is_from_script ? "true" : "false") + ",\n");
 			source.push_back("\t\t\t\t\"arguments\": [\n");
 			for (int i = 0; i < e->get().argument_names.size(); i++) {
 				source.push_back("\t\t\t\t\t{\n");
