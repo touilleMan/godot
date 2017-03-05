@@ -852,7 +852,7 @@ void ResourceFormatLoaderDLScript::get_recognized_extensions(List<String> *p_ext
 	p_extensions->push_back("dl");
 }
 bool ResourceFormatLoaderDLScript::handles_type(const String& p_type) const {
-	return p_type == "dl";
+	return (p_type=="Script" || p_type=="DLScript");
 }
 String ResourceFormatLoaderDLScript::get_resource_type(const String &p_path) const {
 	String el = p_path.get_extension().to_lower();
@@ -876,7 +876,7 @@ bool ResourceFormatSaverDLScript::recognize(const RES& p_resource) const {
 
 void ResourceFormatSaverDLScript::get_recognized_extensions(const RES& p_resource,List<String> *p_extensions) const {
 	if (p_resource->cast_to<DLScript>()) {
-		p_extensions->push_back("gd");
+		p_extensions->push_back("dl");
 	}
 }
 

@@ -85,7 +85,6 @@ class DLLibrary;
 class DLScript : public Script {
 
 	GDCLASS(DLScript,Script);
-	RES_BASE_EXTENSION("dl");
 
 	Ref<DLLibrary> library;
 	StringName script_name;
