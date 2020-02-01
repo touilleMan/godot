@@ -69,8 +69,8 @@ public:
 
 	bool erase(const Variant &p_key);
 
-	bool operator==(const Dictionary &p_dictionary) const;
-	bool operator!=(const Dictionary &p_dictionary) const;
+	bool operator_eq(const Dictionary &p_dictionary) const;
+	bool operator_ne(const Dictionary &p_dictionary) const;
 
 	uint32_t hash() const;
 	void operator=(const Dictionary &p_dictionary);

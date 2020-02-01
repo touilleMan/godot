@@ -149,7 +149,7 @@ bool Dictionary::erase(const Variant &p_key) {
 	return _p->variant_map.erase(p_key);
 }
 
-bool Dictionary::operator==(const Dictionary &p_dictionary) const {
+bool Dictionary::operator_eq(const Dictionary &p_dictionary) const {
 	// Cheap checks
 	if (_p == p_dictionary._p) {
 		return true;
@@ -173,8 +173,8 @@ bool Dictionary::operator==(const Dictionary &p_dictionary) const {
 	return !this_E && !other_E;
 }
 
-bool Dictionary::operator!=(const Dictionary &p_dictionary) const {
-	return !(*this == p_dictionary);
+bool Dictionary::operator_ne(const Dictionary &p_dictionary) const {
+	return !this->operator_eq(p_dictionary);
 }
 
 void Dictionary::_ref(const Dictionary &p_from) const {

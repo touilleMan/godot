@@ -153,7 +153,7 @@ godot_variant GDAPI *godot_dictionary_next(const godot_dictionary *p_self, const
 godot_bool GDAPI godot_dictionary_operator_equal(const godot_dictionary *p_self, const godot_dictionary *p_b) {
 	const Dictionary *self = (const Dictionary *)p_self;
 	const Dictionary *b = (const Dictionary *)p_b;
-	return *self == *b;
+	return self->operator_eq(*b);
 }
 
 godot_string GDAPI godot_dictionary_to_json(const godot_dictionary *p_self) {
