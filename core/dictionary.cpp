@@ -150,13 +150,31 @@ bool Dictionary::erase(const Variant &p_key) {
 }
 
 bool Dictionary::operator==(const Dictionary &p_dictionary) const {
+	// Cheap checks
+	if (_p == p_dictionary._p) {
+		return true;
+	}
+	if (_p->variant_map.size() != p_dictionary._p->variant_map.size()) {
+		return false;
+	}
 
-	return _p == p_dictionary._p;
+	// Heavy O(n) check
+	OrderedHashMap<Variant, Variant, VariantHasher, VariantComparator>::Element this_E = _p->variant_map.front();
+	OrderedHashMap<Variant, Variant, VariantHasher, VariantComparator>::Element other_E = p_dictionary._p->variant_map.front();
+
+	while (this_E && other_E) {
+		if (this_E.key() != other_E.key() || this_E.value() != other_E.value()) {
+			return false;
+		}
+		this_E = this_E.next();
+		other_E = other_E.next();
+	}
+
+	return !this_E && !other_E;
 }
 
 bool Dictionary::operator!=(const Dictionary &p_dictionary) const {
-
-	return _p != p_dictionary._p;
+	return !(*this == p_dictionary);
 }
 
 void Dictionary::_ref(const Dictionary &p_from) const {
